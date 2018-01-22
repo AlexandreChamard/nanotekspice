@@ -10,20 +10,24 @@
 namespace nts {
 	class Bool {
 	public:
-		enum Type {
+		enum State {
+			UNDEFINED = -1,
 			FALSE,
-			TRUE,
-			UNDEFINED
+			TRUE
 		};
 
-		Bool();
-		~Bool();
+		Bool() = default;
+		Bool(bool);
+		~Bool() = default;
 		Bool(Bool const &) = default;
 		Bool(Bool &&) = default;
 		Bool &operator=(Bool const &) = default;
 		Bool &operator=(Bool &&) = default;
-	private:
-		int state = UNDEFINED;
 
+		Bool &operator=(bool);
+		State getState() const;
+
+	private:
+		State _state = UNDEFINED;
 	};
 }
