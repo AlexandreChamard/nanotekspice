@@ -11,10 +11,18 @@
 int main()
 {
 	nts::Bool b;
+	nts::Bool t{true};
+	nts::Bool f{false};
+	nts::Bool u{};
 
-	std::cout << b.getState();
+	std::cout << b << std::endl;
 	b = true;
-	std::cout << b.getState();
+	std::cout << b << std::endl;
 	b = false;
-	std::cout << b.getState();
+	std::cout << b << std::endl;
+	std::cout << std::endl;
+	std::cout << "t || t = " << (t || t) << std::endl;
+	std::cout << "t || f = " << (t || f) << std::endl;
+	std::cout << "t && t = " << (t && t) << std::endl;
+	std::cout << "t && f = " << (t && f) << std::endl;
 }
