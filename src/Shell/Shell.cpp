@@ -60,3 +60,14 @@ void nts::Shell::execDump()
 {
 	std::cout << "dump!" << std::endl;
 }
+
+/*
+node {
+	array sortie {
+
+	}
+	array d'entrée {
+		array<pair<composant&, int>> // chaque entrée apel compute du composant avec l'int
+	}
+}
+*/
