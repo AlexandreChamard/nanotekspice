@@ -6,32 +6,21 @@
 */
 
 #include <iostream>
+#include "Circuit.hpp"
+#include "Parser.hpp"
 #include "Shell.hpp"
 #include "Bool.hpp"
 
-// int main()
-// {
-// 	nts::Bool b;
-// 	nts::Bool t{true};
-// 	nts::Bool f{false};
-// 	nts::Bool u{};
-//
-// 	std::cout << b << std::endl;
-// 	b = true;
-// 	std::cout << b << std::endl;
-// 	b = false;
-// 	std::cout << b << std::endl;
-// 	std::cout << std::endl;
-// 	std::cout << "t || t = " << (t || t) << std::endl;
-// 	std::cout << "t || f = " << (t || f) << std::endl;
-// 	std::cout << "t && t = " << (t && t) << std::endl;
-// 	std::cout << "t && f = " << (t && f) << std::endl;
-// }
-
-int main()
+int main(int ac, char **av)
 {
-	nts::Shell shell;
+	if (ac == 1) {
+		return (1);
+	}
+	nts::Circuit circuit;
+	nts::Parser parser { circuit };
+	// nts::Shell<nts::Circuit> shell{ &circuit };
 
-	shell.loop();
+	parser(av[1]);
+	// shell.loop();
 	return 0;
 }
