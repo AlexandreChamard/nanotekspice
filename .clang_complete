@@ -1,2 +1,5 @@
 -Isrc/Type
 -Isrc/Shell
+-Isrc/Circuit
+-Isrc/Parser
+-Isrc/IComponents

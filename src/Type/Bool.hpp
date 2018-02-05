@@ -11,7 +11,7 @@
 
 namespace nts {
 	enum Tristate {
-		UNDEFINED = (-true),
+		UNDEFINED = -true,
 		TRUE = true,
 		FALSE = false
 	};
@@ -27,6 +27,7 @@ namespace nts {
 
 	public:
 		Bool &operator=(bool);
+		operator Tristate() const { return _state; }
 		Bool operator==(Bool const &) const;
 		Bool operator!=(Bool const &) const;
 		Bool operator||(Bool const &) const;

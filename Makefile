@@ -21,6 +21,10 @@ OPTI_FLAG	=	-O2
 CXXFLAGS	=	-std=c++14 -W -Wall -Wextra
 CXXFLAGS	+=	-I./src/Type
 CXXFLAGS	+=	-I./src/Shell
+CXXFLAGS	+=	-I./src/Circuit
+CXXFLAGS	+=	-I./src/Parser
+CXXFLAGS	+=	-I./src/IComponents
+CXXFLAGS	+=	-I./src/IComponents/4001
 
 ifeq	($(RELEASE),true)
 CXXFLAGS	+=	$(OPTI_FLAG)
@@ -33,8 +37,10 @@ endif
 LDFLAGS		=
 
 SRC		=	src/main.cpp			\
-			src/Shell/Shell.cpp		\
+			src/Circuit/Circuit.cpp		\
+			src/Parser/Parser.cpp		\
 			src/Type/Bool.cpp		\
+			# src/IComponents/4001/4001.cpp	\
 
 OBJ		=	$(SRC:.cpp=.o)
 

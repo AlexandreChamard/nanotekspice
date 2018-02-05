@@ -5,54 +5,52 @@
 ** description
 */
 
+#include "Circuit.hpp"
 #include "4001.hpp"
 
-nts::Tristate compute4()
+nts::Tristate nts::C4001::compute4()
 {
-	_output[3].first =
-	!(nts::Bool(_input[6].first.compute(_input[6].second)) |
-	nts::Bool(_input[7].first.compute(_input[7].second)));
-	return _output[3].first;
+	return _outputs[3].state =
+	!(nts::Bool(_inputs[6].component.compute(_inputs[6].pin)) |
+	nts::Bool(_inputs[7].component.compute(_inputs[7].pin)));
 }
 
-nts::Tristate compute3()
+nts::Tristate nts::C4001::compute3()
 {
-	_output[2].first =
-	!(nts::Bool(_input[4].first.compute(_input[4].second)) |
-	nts::Bool(_input[5].first.compute(_input[5].second)));
-	return _output[2].first;
+	return _outputs[2].state =
+	!(nts::Bool(_inputs[4].component.compute(_inputs[4].pin)) |
+	nts::Bool(_inputs[5].component.compute(_inputs[5].pin)));
 }
 
-nts::Tristate compute2()
+nts::Tristate nts::C4001::compute2()
 {
-	_output[1].first =
-	!(nts::Bool(_input[2].first.compute(_input[2].second)) |
-	nts::Bool(_input[3].first.compute(_input[3].second)));
-	return _output[1].first;
+	return _outputs[1].state =
+	!(nts::Bool(_inputs[2].component.compute(_inputs[2].pin)) |
+	nts::Bool(_inputs[3].component.compute(_inputs[3].pin)));
 }
 
-nts::Tristate compute1()
+nts::Tristate nts::C4001::compute1()
 {
-	_output[0].first =
-	!(nts::Bool(_input[0].first.compute(_input[0].second)) |
-	nts::Bool(_input[1].first.compute(_input[1].second)));
-	return _output[0].first;
+	return _outputs[0].state =
+	!(nts::Bool(_inputs[0].component.compute(_inputs[0].pin)) |
+	nts::Bool(_inputs[1].component.compute(_inputs[1].pin)));
 }
 
-nts::Tristate compute(std::size_t pin)
+nts::Tristate nts::C4001::compute(std::size_t pin)
 {
-	if (_cycles[pin] == cycle_g)
-		return _output[pin].first;
-	_cycles[pin]++;
-	return _output[pin].second();
+	if (_outputs[pin].cycle == cycle_g)
+		return _outputs[pin].state;
+	_outputs[pin].cycle++;
+	return (_outputs[pin].compute)();
 }
 
-void setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
+void nts::C4001::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
-	_input[pin] = {other, otherPin};
+	_inputs[pin].component = other;
+	_inputs[pin].pin = otherPin;
 }
 
-void dump()
+void nts::C4001::dump() const
 {
 
 }
