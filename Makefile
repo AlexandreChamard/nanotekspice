@@ -19,12 +19,15 @@ RELEASE		=	false
 OPTI_FLAG	=	-O2
 
 CXXFLAGS	=	-std=c++14 -W -Wall -Wextra
+CXXFLAGS	+=	-I./src/Lib
 CXXFLAGS	+=	-I./src/Type
 CXXFLAGS	+=	-I./src/Shell
 CXXFLAGS	+=	-I./src/Circuit
 CXXFLAGS	+=	-I./src/Parser
 CXXFLAGS	+=	-I./src/IComponents
 CXXFLAGS	+=	-I./src/IComponents/4001
+CXXFLAGS	+=	-I./src/Lib
+CXXFLAGS	+=	-I./src/Errors
 
 ifeq	($(RELEASE),true)
 CXXFLAGS	+=	$(OPTI_FLAG)
@@ -39,6 +42,8 @@ LDFLAGS		=
 SRC		=	src/main.cpp			\
 			src/Circuit/Circuit.cpp		\
 			src/Parser/Parser.cpp		\
+			src/Lib/ParsFile.cpp		\
+			src/Lib/Tools.cpp		\
 			src/Type/Bool.cpp		\
 			# src/IComponents/4001/4001.cpp	\
 

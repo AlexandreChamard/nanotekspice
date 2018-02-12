@@ -34,7 +34,7 @@ namespace nts {
 		using createComponent_t = std::unique_ptr<IComponent> (*)(std::string const &);
 		std::unordered_map<std::string, createComponent_t> _map;
 		std::vector<Output> _outputs;
-		std::vector<IComponent> _components;
+		std::vector<std::unique_ptr<IComponent>> _components;
 		std::vector<Input> _inputs;
 	};
 }

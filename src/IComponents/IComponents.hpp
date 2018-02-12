@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <memory>
 #include "Bool.hpp"
 
 namespace  nts {
@@ -27,7 +28,7 @@ namespace  nts {
 		computePin_t compute;
 	};
 	struct Input {
-		IComponent &component;
+		std::shared_ptr<IComponent> component;
 		std::size_t pin;
 	};
 }

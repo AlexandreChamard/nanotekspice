@@ -21,6 +21,8 @@ int main(int ac, char **av)
 	// nts::Shell<nts::Circuit> shell{ &circuit };
 
 	parser(av[1]);
+	parser.dump();
+
 	// shell.loop();
 	return 0;
 }

@@ -3,3 +3,5 @@
 -Isrc/Circuit
 -Isrc/Parser
 -Isrc/IComponents
+-Isrc/Lib
+-Isrc/Errors
