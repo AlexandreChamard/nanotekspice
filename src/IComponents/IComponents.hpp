@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <memory>
 #include "Bool.hpp"
 
 namespace  nts {

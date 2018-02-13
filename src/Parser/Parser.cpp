@@ -5,55 +5,100 @@
 ** description
 */
 
-#include <fstream>
-#include <sstream>
-#include <exception>
 #include "Parser.hpp"
+#include "ParsFile.hpp"
+#include "Cutline.hpp"
+#include "ParsingErrors.hpp"
+#include "Tools.hpp"
 
 nts::Parser::Parser(Circuit &circuit): _circuit{ circuit } {}
 
 void nts::Parser::operator()(std::string const &filename)
 {
-	std::ifstream file{ filename };
-	std::string line;
+	lib::ParsFile file{ filename, lib::COMMENT | lib::EMPTY };
+	unsigned int nbC = 0;
+	unsigned int nbL = 0;
 
-	if (file.is_open() == false) {
-		throw std::invalid_argument{ "no such file or directory" };
-	}
+	std::string line = file.getline();
 	while (!file.eof()) {
-		std::getline(file, line);
-		std::size_t found = line.find("#");
-		if (found != std::string::npos) {
-			line.erase();
-		}
-		if (line.size() == 0) continue;
-		parsInfos(line);
+		switch (_parsType) {
+			case CHIPSETS:
+				(nbC += parsChipsets(line)) || parsInfos(line);
+				break;
+			case LINKS:
+				(nbL += parsLinks(line)) || parsInfos(line);
+				break;
+			default:
+				parsInfos(line);
+		};
+		line = file.getline();
 	}
+	if (nbC == 0) throw nts::NoChipSecError{};
+	if (nbL == 0) throw nts::NoLinkSecError{};
 }
 
-void nts::Parser::parsInfos(std::string const &line)
+bool nts::Parser::parsInfos(std::string &line)
 {
-	std::stringstream l{ line };
-	std::string info;
-	char end = 0;
+	lib::Cutline<':', '\0'> cutter;
+	auto vec = cutter(line);
 
-	l >> info >> end;
-
-	std::cout << info << "  ";
-	if (end != 0 || end == ':') {
-		throw std::invalid_argument{ "lexical or syntactic errors" };
+	if (vec.back().size() != 0) {
+		throw nts::SyntaxError{ line };
 	}
-	std::cout << std::endl;
+	if (vec[0] == ".chipsets") {
+		_parsType = CHIPSETS;
+	} else if (vec[0] == ".links") {
+		_parsType = LINKS;
+	} else {
+		throw nts::SyntaxError{ line };
+	}
+	return true;
 }
 
-void nts::Parser::parsChipsets(std::string const &line)
+bool nts::Parser::parsChipsets(std::string line)
 {
-	auto it = std::find_if( std::begin( myList ),
-	std::end( myList ),
-	[&]( const int v ){ return 0 == ( v % 17 ); } );
+	lib::Cutline<' ', '\0'> cutter;
+	auto vec = cutter(line);
+
+	if (vec.size() < 2 || vec.back().size() == 0) {
+		_parsType = NONE;
+		return false;
+	}
+	if (_chipsets.find(vec[1]) != _chipsets.end()) {
+		throw nts::CExistError{ vec[1] };
+	}
+	_chipsets.insert(make_pair(vec[1], vec[0]));
+	return true;
 }
 
-void nts::Parser::parsLinks(std::string const &line)
+bool nts::Parser::parsLinks(std::string line)
 {
+	lib::Cutline<':', ' ', ':', '\0'> cutter;
+	auto vec = cutter(line);
 
+	if (vec.size() < 4 || vec.back().size() == 0) {
+		_parsType = NONE;
+		return false;
+	}
+	if (_chipsets.find(vec[0]) == _chipsets.end()) {
+		throw nts::CNExistError{ vec[0] };
+	}
+	if (_chipsets.find(vec[2]) == _chipsets.end()) {
+		throw nts::CNExistError{ vec[2] };
+	}
+	_links.push_back(Link{ vec[0], vec[1], vec[2], vec[3] });
+	return true;
+}
+
+void nts::Parser::dump()
+{
+	std::cout << "CHIPSETS :" << std::endl;
+	for (auto elem : _chipsets) {
+		std::cout << elem.first << " : " << elem.second << std::endl;
+	}
+	std::cout << "LINKS :"<< std::endl;
+	for (auto elem : _links) {
+		std::cout << elem.oname << " : " << elem.opin << " -> "
+		<< elem.iname << " : " << elem.ipin << std::endl;
+	}
 }

@@ -15,6 +15,7 @@ namespace nts {
 		TRUE = true,
 		FALSE = false
 	};
+
 	class Bool {
 	public:
 		Bool(bool);

@@ -12,8 +12,10 @@
 # Components 4040 8 first outputs takes one to one the 8 output of ROM and
 # XOR them before sending the result on the terminal component.
 .chipsets:
-# CLK DMP RST - OUT # X X 1 - Display nothing # X 0 0 - Display nothing
-# / 1 0 - Dump character on terminal input dump
+# CLK DMP RST - OUT # X X 1 - Display nothing
+# X 0 0 - Display nothing
+# / 1 0 - Dump character on terminal
+input dump
 clock clock
 input reset
 false gnd
@@ -23,8 +25,10 @@ false gnd
 4081 and
 4030 xor0
 4030 xor1
-# Terminal pin 1 to 8 are data # Terminal pin 9 is WR for "write request"
-# Working on / terminal out
+# Terminal pin 1 to 8 are data
+# Terminal pin 9 is WR for "write request"
+# Working on /
+terminal out
 .links:
 ################################
 dump:1 and:1

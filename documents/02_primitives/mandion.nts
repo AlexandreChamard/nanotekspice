@@ -5,7 +5,9 @@ input a
 input b
 input c
 output s
-4069 no 4071 or 4081 and
+4069 no
+4071 or
+4081 and
 # (a)-|>o-|>o-[>=1]
 # (b)-|>o-----[>=1]-|>o-[ & ]
 # (c)-------------------[ & ]--
@@ -23,4 +25,4 @@ or:3 no:9
 no:8 and:1
 c:1 and:2
 # [ & ]-------
-s:1 and:3 
+s:1 and:3
