@@ -27,7 +27,7 @@ namespace  nts {
 		computePin_t compute;
 	};
 	struct Input {
-		IComponent &component;
+		IComponent *component;
 		std::size_t pin;
 	};
 }
