@@ -10,13 +10,52 @@
 #include <exception>
 #include <string>
 
+#include <iostream>
 namespace nts {
-	class CExistError: public std::exception {
+	class SyntaxError : public std::exception {
 	public:
-		CExistError(std::string const &msg = "") throw() : _msg(msg) {}
+		SyntaxError(std::string const &msg = "") throw() :
+		_msg("Lexical or syntactic errors: \"" + msg + '\"') {}
 
-		virtual char const *what() const throw() {
-			return (std::string("Component: " + _msg + " already exist").c_str());
+		char const *what() const throw() override {
+			return (_msg.c_str());
+		}
+
+		virtual ~SyntaxError() throw(){}
+
+	private:
+		std::string _msg;
+	};
+
+	class NoChipSecError : public std::exception {
+	public:
+		NoChipSecError() throw() {}
+
+		char const *what() const throw() override {
+			return ("No chipset section.");
+		}
+
+		virtual ~NoChipSecError() throw(){}
+	};
+
+	class NoLinkSecError : public std::exception {
+	public:
+		NoLinkSecError() throw() {}
+
+		char const *what() const throw() override {
+			return ("No links section.");
+		}
+
+		virtual ~NoLinkSecError() throw(){}
+	};
+
+	class CExistError : public std::exception {
+	public:
+		CExistError(std::string const &msg = "") throw() :
+		_msg("Component: \"" + msg + "\" already exists") {}
+
+		char const *what() const throw() override {
+			return (_msg.c_str());
 		}
 
 		virtual ~CExistError() throw(){}
@@ -25,12 +64,13 @@ namespace nts {
 		std::string _msg;
 	};
 
-	class CNExistError: public std::exception {
+	class CNExistError : public std::exception {
 	public:
-		CNExistError(std::string const &msg = "") throw() : _msg(msg) {}
+		CNExistError(std::string const &msg = "") throw() :
+		_msg("Component: \"" + msg + "\" doesn't exist") {}
 
-		virtual char const *what() const throw() {
-			return (std::string("Component: " + _msg + " doesn't exist").c_str());
+		char const *what() const throw() override {
+			return (_msg.c_str());
 		}
 
 		virtual ~CNExistError() throw(){}

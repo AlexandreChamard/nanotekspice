@@ -35,17 +35,20 @@ namespace lib {
 		int _flags;
 	};
 
-	class FileError: public std::exception {
+	class FileError : public std::exception {
 	public:
-		FileError(const std::string& msg = "") throw() : _msg(msg) {}
+		FileError(std::string const &msg = "") throw() :
+		_msg(msg) {}
 
-		virtual const char* what() const throw() {
+		char const *what() const throw() override {
 			return (_msg.c_str());
 		}
 
-		virtual ~FileError() throw(){}
+		virtual ~FileError() throw() {}
 
 	private:
 		std::string _msg;
 	};
+
+	bool fileExist(std::string const &pathName);
 }

@@ -45,7 +45,7 @@ SRC		=	src/main.cpp			\
 			src/Lib/ParsFile.cpp		\
 			src/Lib/Tools.cpp		\
 			src/Type/Bool.cpp		\
-			# src/IComponents/4001/4001.cpp	\
+			src/IComponents/4001/4001.cpp	\
 
 OBJ		=	$(SRC:.cpp=.o)
 

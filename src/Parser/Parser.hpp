@@ -51,8 +51,3 @@ namespace nts {
 	};
 
 }
-
-class syntacticErrors : public std::exception
-{
-
-};

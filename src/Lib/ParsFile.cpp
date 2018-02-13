@@ -5,6 +5,8 @@
 ** description
 */
 
+#include <sys/stat.h>
+
 #include "Cutline.hpp"
 #include "ParsFile.hpp"
 
@@ -40,4 +42,11 @@ bool lib::ParsFile::isOpen() const
 bool lib::ParsFile::eof() const
 {
 	return _file.eof();
+}
+
+bool fileExist(std::string const &pathName)
+{
+	struct stat *stats = NULL;
+
+	return (stat(pathName.c_str(), stats) == 0);
 }

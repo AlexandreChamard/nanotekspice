@@ -5,8 +5,24 @@
 ** description
 */
 
+#include <sstream>
+
 #include "Circuit.hpp"
 #include "4001.hpp"
+
+unsigned int nts::C4001::id = 0;
+
+nts::C4001::C4001(std::string const &value):
+_id{ value }
+{
+	if (_id.size() == 0) {
+		std::stringstream sid;
+
+		sid << "C4001::" << id;
+		_id = sid.str();
+	}
+	id++;
+}
 
 nts::Tristate nts::C4001::compute4()
 {
@@ -46,7 +62,7 @@ nts::Tristate nts::C4001::compute(std::size_t pin)
 
 void nts::C4001::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
-	_inputs[pin].component = other;
+	_inputs[pin].component = &other;
 	_inputs[pin].pin = otherPin;
 }
 
