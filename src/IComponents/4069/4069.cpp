@@ -27,37 +27,37 @@ _id{ value }
 nts::Tristate nts::C4069::compute6()
 {
 	return _outputs[5].state =
-	!nts::Bool(_inputs[5].component->compute(_inputs[5].pin));
+	(!_inputs[5].component->compute(_inputs[5].pin));
 }
 
 nts::Tristate nts::C4069::compute5()
 {
 	return _outputs[4].state =
-	!nts::Bool(_inputs[4].component->compute(_inputs[4].pin));
+	(!_inputs[4].component->compute(_inputs[4].pin));
 }
 
 nts::Tristate nts::C4069::compute4()
 {
 	return _outputs[3].state =
-	!nts::Bool(_inputs[3].component->compute(_inputs[3].pin));
+	(!_inputs[3].component->compute(_inputs[3].pin));
 }
 
 nts::Tristate nts::C4069::compute3()
 {
 	return _outputs[2].state =
-	!nts::Bool(_inputs[2].component->compute(_inputs[2].pin));
+	(!_inputs[2].component->compute(_inputs[2].pin));
 }
 
 nts::Tristate nts::C4069::compute2()
 {
 	return _outputs[1].state =
-	!nts::Bool(_inputs[1].component->compute(_inputs[1].pin));
+	(!_inputs[1].component->compute(_inputs[1].pin));
 }
 
 nts::Tristate nts::C4069::compute1()
 {
 	return _outputs[0].state =
-	!nts::Bool(_inputs[0].component->compute(_inputs[0].pin));
+	(!_inputs[0].component->compute(_inputs[0].pin));
 }
 
 nts::Tristate nts::C4069::compute(std::size_t pin)

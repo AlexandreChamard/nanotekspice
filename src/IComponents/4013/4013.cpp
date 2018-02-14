@@ -26,54 +26,54 @@ _id{ value }
 
 nts::Tristate nts::C4013::compute4()
 {
-	if (!nts::Bool(_inputs[7].component->compute(_inputs[7].pin)) &
-		!nts::Bool(_inputs[6].component->compute(_inputs[6].pin)) &
-		!nts::Bool(_inputs[4].component->compute(_inputs[4].pin)))
+	if ((!_inputs[7].component->compute(_inputs[7].pin)) &
+		(!_inputs[6].component->compute(_inputs[6].pin)) &
+		(!_inputs[4].component->compute(_inputs[4].pin)))
 		return _outputs[3].state;
 	return _outputs[3].state =
-	(nts::Bool(_inputs[4].component->compute(_inputs[4].pin)) |
-	(nts::Bool(_inputs[7].component->compute(_inputs[7].pin)) &
-	nts::Bool(_inputs[5].component->compute(_inputs[5].pin)) &
-	!nts::Bool(_inputs[6].component->compute(_inputs[6].pin))));
+	((_inputs[4].component->compute(_inputs[4].pin)) |
+	((_inputs[7].component->compute(_inputs[7].pin)) &
+	(_inputs[5].component->compute(_inputs[5].pin)) &
+	(!_inputs[6].component->compute(_inputs[6].pin))));
 }
 
 nts::Tristate nts::C4013::compute3()
 {
-	if (!nts::Bool(_inputs[7].component->compute(_inputs[7].pin)) &
-		!nts::Bool(_inputs[6].component->compute(_inputs[6].pin)) &
-		!nts::Bool(_inputs[4].component->compute(_inputs[4].pin)))
+	if ((!_inputs[7].component->compute(_inputs[7].pin)) &
+		(!_inputs[6].component->compute(_inputs[6].pin)) &
+		(!_inputs[4].component->compute(_inputs[4].pin)))
 		return _outputs[2].state;
 	return _outputs[2].state =
-	(nts::Bool(_inputs[6].component->compute(_inputs[6].pin)) |
-	(nts::Bool(_inputs[7].component->compute(_inputs[7].pin)) &
-	!nts::Bool(_inputs[5].component->compute(_inputs[5].pin)) &
-	!nts::Bool(_inputs[4].component->compute(_inputs[4].pin))));
+	((_inputs[6].component->compute(_inputs[6].pin)) |
+	((_inputs[7].component->compute(_inputs[7].pin)) &
+	(!_inputs[5].component->compute(_inputs[5].pin)) &
+	(!_inputs[4].component->compute(_inputs[4].pin))));
 }
 
 nts::Tristate nts::C4013::compute2()
 {
-	if (!nts::Bool(_inputs[0].component->compute(_inputs[0].pin)) &
-		!nts::Bool(_inputs[3].component->compute(_inputs[3].pin)) &
-		!nts::Bool(_inputs[1].component->compute(_inputs[1].pin)))
+	if ((!_inputs[0].component->compute(_inputs[0].pin)) &
+		(!_inputs[3].component->compute(_inputs[3].pin)) &
+		(!_inputs[1].component->compute(_inputs[1].pin)))
 		return _outputs[1].state;
 	return _outputs[1].state =
-	(nts::Bool(_inputs[1].component->compute(_inputs[1].pin)) |
-	(nts::Bool(_inputs[0].component->compute(_inputs[0].pin)) &
-	!nts::Bool(_inputs[2].component->compute(_inputs[2].pin)) &
-	!nts::Bool(_inputs[3].component->compute(_inputs[3].pin))));
+	((_inputs[1].component->compute(_inputs[1].pin)) |
+	((_inputs[0].component->compute(_inputs[0].pin)) &
+	(!_inputs[2].component->compute(_inputs[2].pin)) &
+	(!_inputs[3].component->compute(_inputs[3].pin))));
 }
 
 nts::Tristate nts::C4013::compute1()
 {
-	if (!nts::Bool(_inputs[0].component->compute(_inputs[0].pin)) &
-		!nts::Bool(_inputs[3].component->compute(_inputs[3].pin)) &
-		!nts::Bool(_inputs[1].component->compute(_inputs[1].pin)))
+	if ((!_inputs[0].component->compute(_inputs[0].pin)) &
+		(!_inputs[3].component->compute(_inputs[3].pin)) &
+		(!_inputs[1].component->compute(_inputs[1].pin)))
 		return _outputs[0].state;
 	return _outputs[0].state =
-	(nts::Bool(_inputs[3].component->compute(_inputs[3].pin)) |
-	(nts::Bool(_inputs[0].component->compute(_inputs[0].pin)) &
-	nts::Bool(_inputs[2].component->compute(_inputs[2].pin)) &
-	!nts::Bool(_inputs[1].component->compute(_inputs[1].pin))));
+	((_inputs[3].component->compute(_inputs[3].pin)) |
+	((_inputs[0].component->compute(_inputs[0].pin)) &
+	(_inputs[2].component->compute(_inputs[2].pin)) &
+	(!_inputs[1].component->compute(_inputs[1].pin))));
 }
 
 nts::Tristate nts::C4013::compute(std::size_t pin)

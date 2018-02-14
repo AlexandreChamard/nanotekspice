@@ -1,0 +1,10 @@
+input : p1 p3 p5 p9 p11 p13
+output : p2 p4 p6 p8 p10 p12
+?? : p7 p14
+
+p2 = !p1
+p4 = !p3
+p6 = !p5
+p8 = !p9
+p10 = !p11
+p12 = !p13

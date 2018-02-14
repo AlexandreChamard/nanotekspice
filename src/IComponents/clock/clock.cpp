@@ -27,7 +27,7 @@ _id{ value }
 
 nts::Tristate nts::Cclock::compute1(std::size_t __attribute__((unused)) pin)
 {
-	return _outputs[0].state = nts::Bool(cycle_g % 2);
+	return _outputs[0].state = (nts::Tristate)(cycle_g % 2);
 }
 
 nts::Tristate nts::Cclock::compute(std::size_t pin)
