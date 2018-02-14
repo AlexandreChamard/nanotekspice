@@ -9,6 +9,7 @@
 
 #include "Circuit.hpp"
 #include "input.hpp"
+#include "ExecErrors.hpp"
 
 unsigned int nts::Cinput::id = 0;
 
@@ -26,23 +27,36 @@ _id{ value }
 
 void nts::Cinput::setState(Tristate state)
 {
-	_state = state;
+	_output.state = state;
 }
 
-nts::Tristate nts::Cinput::compute(std::size_t __attribute__((unused)) pin)
+void nts::Cinput::setState(bool state)
 {
-	/* if pin != 1 throw */
-	return _state;
+	_output.state = Tristate(state);
+}
+
+nts::Tristate nts::Cinput::compute(std::size_t pin)
+{
+	if (pin > _nbPins) {
+		throw PinNExistError{ _id, pin };
+	}
+	return _pinsRef[pin - 1].compute();
 }
 
 void nts::Cinput::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
-	(void)pin;
-	(void)other;
-	(void)otherPin;
+	if (pin > _nbPins) {
+		throw PinNExistError{ _id, pin };
+	}
+	if (_pinsRef[pin - 1].info == PIN_INPUT) {
+		_pinsRef[pin - 1].link(other, otherPin);
+	} else {
+		other.setLink(otherPin, *this, pin);
+	}
 }
 
 void nts::Cinput::dump() const
 {
-
+	std::cout << _id << ':' << std::endl;
+	std::cout << '\t' << _output.state << std::endl;
 }

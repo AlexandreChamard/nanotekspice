@@ -19,6 +19,14 @@ RELEASE		=	false
 OPTI_FLAG	=	-O2
 
 CXXFLAGS	=	-std=c++14 -W -Wall -Wextra
+ifeq	($(RELEASE),true)
+CXXFLAGS	+=	$(OPTI_FLAG)
+CXXFLAGS	+=	-Werror -Wno-unused-result
+else
+CXXFLAGS	+=	-O0 -g
+CXXFLAGS	+=	-Wuninitialized
+endif
+
 CXXFLAGS	+=	-I./src/Lib
 CXXFLAGS	+=	-I./src/Type
 CXXFLAGS	+=	-I./src/Shell
@@ -27,13 +35,6 @@ CXXFLAGS	+=	-I./src/Parser
 CXXFLAGS	+=	-I./src/IComponents
 CXXFLAGS	+=	-I./src/Errors
 
-ifeq	($(RELEASE),true)
-CXXFLAGS	+=	$(OPTI_FLAG)
-CXXFLAGS	+=	-Werror -Wno-unused-result
-else
-CXXFLAGS	+=	-O0 -g
-CXXFLAGS	+=	-Wuninitialized
-endif
 
 # LDFLAGS		=
 

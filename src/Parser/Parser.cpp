@@ -66,7 +66,7 @@ bool nts::Parser::parsChipsets(std::string line)
 		return false;
 	}
 	if (_chipsets.find(vec[1]) != _chipsets.end()) {
-		throw nts::CExistError{ vec[1] };
+		throw nts::ComponentExistError{ vec[1] };
 	}
 	_chipsets.insert(make_pair(vec[1], vec[0]));
 	return true;
@@ -82,10 +82,10 @@ bool nts::Parser::parsLinks(std::string line)
 		return false;
 	}
 	if (_chipsets.find(vec[0]) == _chipsets.end()) {
-		throw nts::CNExistError{ vec[0] };
+		throw nts::ComponentNExistError{ vec[0] };
 	}
 	if (_chipsets.find(vec[2]) == _chipsets.end()) {
-		throw nts::CNExistError{ vec[2] };
+		throw nts::ComponentNExistError{ vec[2] };
 	}
 	_links.push_back(Link{ vec[0], vec[1], vec[2], vec[3] });
 	return true;

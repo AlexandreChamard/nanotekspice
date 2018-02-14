@@ -8,6 +8,7 @@
 #include <sstream>
 
 #include "Circuit.hpp"
+#include "ExecErrors.hpp"
 #include "output.hpp"
 
 unsigned int nts::Coutput::id = 0;
@@ -26,22 +27,31 @@ _id{ value }
 
 nts::Tristate nts::Coutput::getState()
 {
-	return state;
+	return COMPUTE(_input);
 }
 
-nts::Tristate nts::Coutput::compute(std::size_t __attribute__((unused)) pin)
+nts::Tristate nts::Coutput::compute(std::size_t pin)
 {
-	return nts::Bool();
+	if (pin > _nbPins) {
+		throw PinNExistError{ _id, pin };
+	}
+	return _pinsRef[pin - 1].compute();
 }
 
 void nts::Coutput::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
-	(void)pin;
-	(void)other;
-	(void)otherPin;
+	if (pin > _nbPins) {
+		throw PinNExistError{ _id, pin };
+	}
+	if (_pinsRef[pin - 1].info == PIN_INPUT) {
+		_pinsRef[pin - 1].link(other, otherPin);
+	} else {
+		other.setLink(otherPin, *this, pin);
+	}
 }
 
 void nts::Coutput::dump() const
 {
-
+	std::cout << _id << ':' << std::endl;
+	std::cout << '\t' << COMPUTE(_input) << std::endl;
 }

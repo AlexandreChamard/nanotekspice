@@ -13,7 +13,6 @@
 #include "IComponents.hpp"
 
 namespace nts {
-	extern std::size_t cycle_g;
 
 	class Circuit {
 	public:

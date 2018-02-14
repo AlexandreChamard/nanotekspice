@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <array>
 #include "IComponents.hpp"
 
 namespace nts {
@@ -22,13 +21,24 @@ namespace nts {
 		nts::Tristate getState();
 
 	private:
-
 		nts::Tristate compute1(std::size_t pin);
 
 	private:
 		static unsigned int id;
 
 		std::string _id;
-		nts::Tristate state;
+		Input _input;
+
+		static const std::size_t _nbPins = 1;
+		const Ref _pinsRef[_nbPins] = {
+			{
+				PIN_INPUT,
+				[&]() {return COMPUTE(_input);},
+				[&](IComponent &link, std::size_t pin) {
+					_input.link = &link;
+					_input.pin = pin;
+				}
+			}
+		};
 	};
 }

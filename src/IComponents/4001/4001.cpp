@@ -27,28 +27,28 @@ _id{ value }
 nts::Tristate nts::C4001::compute4()
 {
 	return _outputs[3].state =
-	(!(_inputs[6].component->compute(_inputs[6].pin)) |
+	((!(_inputs[6].component->compute(_inputs[6].pin))) |
 	(_inputs[7].component->compute(_inputs[7].pin)));
 }
 
 nts::Tristate nts::C4001::compute3()
 {
 	return _outputs[2].state =
-	(!(_inputs[4].component->compute(_inputs[4].pin)) |
+	((!(_inputs[4].component->compute(_inputs[4].pin))) |
 	(_inputs[5].component->compute(_inputs[5].pin)));
 }
 
 nts::Tristate nts::C4001::compute2()
 {
 	return _outputs[1].state =
-	(!(_inputs[2].component->compute(_inputs[2].pin)) |
+	((!(_inputs[2].component->compute(_inputs[2].pin))) |
 	(_inputs[3].component->compute(_inputs[3].pin)));
 }
 
 nts::Tristate nts::C4001::compute1()
 {
 	return _outputs[0].state =
-	(!(_inputs[0].component->compute(_inputs[0].pin)) |
+	((!(_inputs[0].component->compute(_inputs[0].pin))) |
 	(_inputs[1].component->compute(_inputs[1].pin)));
 }
 

@@ -84,6 +84,52 @@ nts::Bool nts::Bool::operator!() const
 	return Bool(!_state);
 }
 
+nts::Tristate operator!(nts::Tristate state)
+{
+	switch (state) {
+		case nts::Tristate::UNDEFINED:
+			return nts::Tristate::UNDEFINED;
+		case nts::Tristate::FALSE:
+			return nts::Tristate::TRUE;
+		case nts::Tristate::TRUE:
+			return nts::Tristate::FALSE;
+	}
+	return nts::Tristate::UNDEFINED;
+}
+
+nts::Tristate operator&(nts::Tristate t1, nts::Tristate t2)
+{
+	if (t1 == nts::Tristate::UNDEFINED || t2 == nts::Tristate::UNDEFINED) {
+		return nts::Tristate::UNDEFINED;
+	}
+	if (t1 == nts::Tristate::TRUE && t2 == nts::Tristate::TRUE) {
+		return nts::Tristate::TRUE;
+	}
+	return nts::Tristate::FALSE;
+}
+
+nts::Tristate operator|(nts::Tristate t1, nts::Tristate t2)
+{
+	if (t1 == nts::Tristate::UNDEFINED || t2 == nts::Tristate::UNDEFINED) {
+		return nts::Tristate::UNDEFINED;
+	}
+	if (t1 == nts::Tristate::TRUE || t2 == nts::Tristate::TRUE) {
+		return nts::Tristate::TRUE;
+	}
+	return nts::Tristate::FALSE;
+}
+
+nts::Tristate operator^(nts::Tristate t1, nts::Tristate t2)
+{
+	if (t1 == nts::Tristate::UNDEFINED || t2 == nts::Tristate::UNDEFINED) {
+		return nts::Tristate::UNDEFINED;
+	}
+	if (t1 != t2) {
+		return nts::Tristate::TRUE;
+	}
+	return nts::Tristate::FALSE;
+}
+
 std::ostream &operator<<(std::ostream &os, nts::Tristate state)
 {
 	switch (state) {

@@ -21,7 +21,7 @@ nts::Circuit::Circuit()
 std::unique_ptr<nts::IComponent> nts::Circuit::createComponent(std::string const &type, std::string const &value)
 {
 	if (_map.find(type) == _map.end()) {
-		throw nts::CNExistError{ type };
+		throw nts::ComponentNExistError{ type };
 	}
 	return _map[type](value);
 }

@@ -9,8 +9,9 @@
 
 #include <exception>
 #include <string>
-
 #include <iostream>
+#include <sstream>
+
 namespace nts {
 	class SyntaxError : public std::exception {
 	public:
@@ -49,31 +50,31 @@ namespace nts {
 		virtual ~NoLinkSecError() throw(){}
 	};
 
-	class CExistError : public std::exception {
+	class ComponentExistError : public std::exception {
 	public:
-		CExistError(std::string const &msg = "") throw() :
+		ComponentExistError(std::string const &msg = "") throw() :
 		_msg("Component: \"" + msg + "\" already exists") {}
 
 		char const *what() const throw() override {
 			return (_msg.c_str());
 		}
 
-		virtual ~CExistError() throw(){}
+		virtual ~ComponentExistError() throw(){}
 
 	private:
 		std::string _msg;
 	};
 
-	class CNExistError : public std::exception {
+	class ComponentNExistError : public std::exception {
 	public:
-		CNExistError(std::string const &msg = "") throw() :
+		ComponentNExistError(std::string const &msg = "") throw() :
 		_msg("Component: \"" + msg + "\" doesn't exist") {}
 
 		char const *what() const throw() override {
 			return (_msg.c_str());
 		}
 
-		virtual ~CNExistError() throw(){}
+		virtual ~ComponentNExistError() throw(){}
 
 	private:
 		std::string _msg;

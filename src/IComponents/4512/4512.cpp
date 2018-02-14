@@ -37,14 +37,14 @@ nts::Tristate nts::C4512::compute7()
 	return _outputs[6].state =
 	((_inputs[0].component->compute(_inputs[0].pin)) &
 	(_inputs[1].component->compute(_inputs[1].pin)) &
-	!((_inputs[2].component->compute(_inputs[2].pin))));
+	(!(_inputs[2].component->compute(_inputs[2].pin))));
 }
 
 nts::Tristate nts::C4512::compute6()
 {
 	return _outputs[5].state =
 	((_inputs[0].component->compute(_inputs[0].pin)) &
-	!((_inputs[1].component->compute(_inputs[1].pin))) &
+	(!(_inputs[1].component->compute(_inputs[1].pin))) &
 	(_inputs[2].component->compute(_inputs[2].pin)));
 }
 
@@ -52,14 +52,14 @@ nts::Tristate nts::C4512::compute5()
 {
 	return _outputs[4].state =
 	((_inputs[0].component->compute(_inputs[0].pin)) &
-	!((_inputs[1].component->compute(_inputs[1].pin))) &
-	!((_inputs[2].component->compute(_inputs[2].pin))));
+	(!(_inputs[1].component->compute(_inputs[1].pin))) &
+	(!(_inputs[2].component->compute(_inputs[2].pin))));
 }
 
 nts::Tristate nts::C4512::compute4()
 {
 	return _outputs[3].state =
-	(!((_inputs[0].component->compute(_inputs[0].pin))) &
+	((!(_inputs[0].component->compute(_inputs[0].pin))) &
 	(_inputs[1].component->compute(_inputs[1].pin)) &
 	(_inputs[2].component->compute(_inputs[2].pin)));
 }
@@ -67,25 +67,25 @@ nts::Tristate nts::C4512::compute4()
 nts::Tristate nts::C4512::compute3()
 {
 	return _outputs[2].state =
-	(!((_inputs[0].component->compute(_inputs[0].pin))) &
+	((!(_inputs[0].component->compute(_inputs[0].pin))) &
 	(_inputs[1].component->compute(_inputs[1].pin)) &
-	!((_inputs[2].component->compute(_inputs[2].pin))));
+	(!(_inputs[2].component->compute(_inputs[2].pin))));
 }
 
 nts::Tristate nts::C4512::compute2()
 {
 	return _outputs[1].state =
-	(!((_inputs[0].component->compute(_inputs[0].pin))) &
-	!((_inputs[1].component->compute(_inputs[1].pin))) &
-	(_inputs[2].component->compute(_inputs[2].pin)));
+	((!(_inputs[0].component->compute(_inputs[0].pin))) &
+	((!(_inputs[1].component->compute(_inputs[1].pin))) &
+	(_inputs[2].component->compute(_inputs[2].pin))));
 }
 
 nts::Tristate nts::C4512::compute1()
 {
 	return _outputs[0].state =
-	(!((_inputs[0].component->compute(_inputs[0].pin))) &
-	!((_inputs[1].component->compute(_inputs[1].pin))) &
-	!((_inputs[2].component->compute(_inputs[2].pin))));
+	((!(_inputs[0].component->compute(_inputs[0].pin))) &
+	(!(_inputs[1].component->compute(_inputs[1].pin))) &
+	(!(_inputs[2].component->compute(_inputs[2].pin))));
 }
 
 nts::Tristate nts::C4512::compute(std::size_t pin)

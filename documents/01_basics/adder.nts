@@ -3,7 +3,7 @@
 .chipsets:
 input a0
 input a1
-input a2
+input	a2
 input a3
 input b0
 input b1

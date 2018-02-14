@@ -7,8 +7,10 @@
 
 #pragma once
 
+#include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include <sstream>
 
 namespace lib {
@@ -28,6 +30,31 @@ namespace lib {
 			vec.push_back(sub_str);
 			if (!sstr.eof()) {
 				std::getline(sstr, sub_str, '\0');
+				str = sub_str;
+			} else {
+				str = "";
+			}
+			return vec;
+		}
+	};
+
+
+	template<>
+	struct Cutline<' '>
+	{
+		std::vector<std::string> operator()(std::string &str)
+		{
+			std::stringstream sstr{ str };
+
+			std::vector<std::string> vec;
+			std::string sub_str;
+			sstr >> sub_str;
+			vec.push_back(sub_str);
+			if (!sstr.eof()) {
+				std::getline(sstr, sub_str, '\0');
+				sub_str.erase(sub_str.begin(),
+				std::find_if(sub_str.begin(), sub_str.end(),
+				[](int ch) { return !std::isspace(ch); }));
 				str = sub_str;
 			} else {
 				str = "";
