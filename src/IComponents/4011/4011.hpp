@@ -13,7 +13,7 @@
 namespace nts {
 	class C4011 : public IComponent {
 	public:
-		C4011() = default;
+		C4011(std::string const &value = "");
 		~C4011() override = default;
 		Tristate compute(std::size_t pin) override;
 		void setLink(std::size_t pin, IComponent &other,
@@ -27,7 +27,9 @@ namespace nts {
 		Tristate compute4();
 
 	private:
-		using computePin_t = Tristate (*)();
+		static unsigned int id;
+
+		std::string _id;
 		std::array<Output, 4> _outputs;
 		std::array<Input, 8> _inputs;
 	};

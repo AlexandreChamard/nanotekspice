@@ -18,11 +18,11 @@ int main(int ac, char **av)
 	}
 	nts::Circuit circuit;
 	nts::Parser parser { circuit };
-	// nts::Shell<nts::Circuit> shell{ &circuit };
+	nts::Shell<nts::Circuit> shell{ &circuit };
 
 	parser(av[1]);
 	parser.dump();
 
-	// shell.loop();
+	shell.loop();
 	return 0;
 }

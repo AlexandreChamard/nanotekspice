@@ -13,7 +13,7 @@
 namespace nts {
 	class Cclock : public IComponent {
 	public:
-		Cclock() = default;
+		Cclock(std::string const &value = "");
 		~Cclock() override = default;
 		Tristate compute(std::size_t pin) override;
 		void setLink(std::size_t pin, IComponent &other,
@@ -25,7 +25,9 @@ namespace nts {
 		nts::Tristate compute1(std::size_t pin);
 
 	private:
-		using computePin_t = Tristate (*)();
+		static unsigned int id;
+
+		std::string _id;
 		std::array<Output, 1> _outputs;
 	};
 }

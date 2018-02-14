@@ -13,7 +13,7 @@
 namespace nts {
 	class Cfalse : public IComponent {
 	public:
-		Cfalse() = default;
+		Cfalse(std::string const &value = "");
 		~Cfalse() override = default;
 		Tristate compute(std::size_t pin) override;
 		void setLink(std::size_t pin, IComponent &other,
@@ -25,7 +25,9 @@ namespace nts {
 		nts::Tristate compute1(std::size_t pin);
 
 	private:
-		using computePin_t = Tristate (*)();
+		static unsigned int id;
+
+		std::string _id;
 		std::array<Output, 1> _outputs;
 	};
 }

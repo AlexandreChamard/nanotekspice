@@ -20,13 +20,13 @@ void nts::Parser::operator()(std::string const &filename)
 	unsigned int nbL = 0;
 
 	std::string line = file.getline();
-	while (!file.eof()) {
+	while (file.eof() == false) {
 		switch (_parsType) {
 			case CHIPSETS:
-				(nbC += parsChipsets(line)) || parsInfos(line);
+				(parsChipsets(line) && ++nbC) || parsInfos(line);
 				break;
 			case LINKS:
-				(nbL += parsLinks(line)) || parsInfos(line);
+				(parsLinks(line) && ++nbL) || parsInfos(line);
 				break;
 			default:
 				parsInfos(line);
@@ -40,7 +40,8 @@ void nts::Parser::operator()(std::string const &filename)
 bool nts::Parser::parsInfos(std::string &line)
 {
 	lib::Cutline<':', '\0'> cutter;
-	auto vec = cutter(line);
+	std::string line_cut = line;
+	auto vec = cutter(line_cut);
 
 	if (vec.back().size() != 0) {
 		throw nts::SyntaxError{ line };

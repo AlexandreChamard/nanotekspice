@@ -35,7 +35,6 @@ namespace nts {
 		void dump();
 
 	private:
-		std::string gnl();
 		bool parsInfos(std::string &);
 		bool parsChipsets(std::string);
 		bool parsLinks(std::string);

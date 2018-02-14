@@ -30,7 +30,6 @@ namespace nts {
 		static unsigned int id;
 
 		std::string _id;
-		using computePin_t = Tristate (*)();
 		std::array<Output, 4> _outputs;
 		std::array<Input, 8> _inputs;
 	};
