@@ -84,9 +84,9 @@ nts::Bool nts::Bool::operator!() const
 	return Bool(!_state);
 }
 
-std::ostream &operator<<(std::ostream &os, nts::Bool const &b)
+std::ostream &operator<<(std::ostream &os, nts::Tristate state)
 {
-	switch (b.getState()) {
+	switch (state) {
 		case nts::Tristate::UNDEFINED:
 		os << 'U';
 		break;
@@ -97,4 +97,9 @@ std::ostream &operator<<(std::ostream &os, nts::Bool const &b)
 		os << '0';
 	};
 	return os;
+}
+
+std::ostream &operator<<(std::ostream &os, nts::Bool const &b)
+{
+	return os << b.getState();
 }

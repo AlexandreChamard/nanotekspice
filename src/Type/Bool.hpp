@@ -44,4 +44,10 @@ namespace nts {
 	};
 }
 
+nts::Tristate operator!(nts::Tristate);
+nts::Tristate operator&(nts::Tristate, nts::Tristate);
+nts::Tristate operator|(nts::Tristate, nts::Tristate);
+nts::Tristate operator^(nts::Tristate, nts::Tristate);
+
+std::ostream &operator<<(std::ostream &, nts::Tristate);
 std::ostream &operator<<(std::ostream &, nts::Bool const &);
