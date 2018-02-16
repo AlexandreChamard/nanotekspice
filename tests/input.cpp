@@ -22,14 +22,11 @@ bool testInput()
 	input1.setState(false);
 	assert(iInput1.compute(1) == nts::Tristate::FALSE);
 
-	/*	ne marche pas car manque getPinState dans IComponent
-		pour avoir IN/OUT et éviter la boucle inf d'appel
 	try {
 		iInput1.setLink(1, iInput2, 1);
 	} catch (nts::LinkError &e) {
 		std::cerr << e.what() << std::endl;
 	}
-	*/
 	try {
 		iInput2.compute(2);
 	} catch (nts::PinNExistError &e) {

@@ -12,6 +12,7 @@
 
 #include "output/output.hpp"
 #include "input/input.hpp"
+#include "4001/4001.hpp"
 #include "ExecErrors.hpp"
 
 #define WHITE	"\e[0;97m"
@@ -31,3 +32,4 @@
 
 bool testInput();
 bool testOutput();
+bool testC4001();

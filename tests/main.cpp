@@ -11,5 +11,9 @@ int main()
 {
 	TEST(testInput);
 	TEST(testOutput);
+	TEST(testOutput);
+	TEST(testOutput);
+	TEST(testC4001);
+
 
 }

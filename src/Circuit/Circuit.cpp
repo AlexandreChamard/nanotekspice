@@ -10,6 +10,7 @@
 #include "ParsingErrors.hpp"
 
 std::size_t nts::cycle_g = 0;
+nts::InfoPin nts::linker_g = nts::InfoPin::PIN_UNUSED;
 
 nts::Circuit::Circuit()
 {

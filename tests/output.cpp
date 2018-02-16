@@ -28,6 +28,11 @@ bool testOutput()
 	assert(output1.getState() == nts::Tristate::FALSE);
 
 	try {
+		iOutput1.setLink(1, iOutput2, 1);
+	} catch (nts::LinkError &e) {
+		std::cerr << e.what() << std::endl;
+	}
+	try {
 		iOutput2.compute(2);
 	} catch (nts::PinNExistError &e) {
 		std::cerr << e.what() << std::endl;

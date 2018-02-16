@@ -60,6 +60,7 @@ SRC		=	../src/Circuit/Circuit.cpp			\
 SRC		+=	main.cpp		\
 			input.cpp		\
 			output.cpp		\
+			4001.cpp		\
 
 OBJ		=	$(SRC:.cpp=.o)
 

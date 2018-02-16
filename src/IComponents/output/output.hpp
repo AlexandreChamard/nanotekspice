@@ -27,16 +27,16 @@ namespace nts {
 		static unsigned int id;
 
 		std::string _id;
-		Input _input;
+		std::array<Input, 1> _inputs;
 
 		static const std::size_t _nbPins = 1;
 		const Ref _pinsRef[_nbPins] = {
-			{
+			{ /* p1 -> _inputs[0] */
 				PIN_INPUT,
-				[&]() {return COMPUTE(_input);},
+				[&]() {return COMPUTE_REF(_inputs[0]);},
 				[&](IComponent &link, std::size_t pin) {
-					_input.link = &link;
-					_input.pin = pin;
+					_inputs[0].link = &link;
+					_inputs[0].pin = pin;
 				}
 			}
 		};

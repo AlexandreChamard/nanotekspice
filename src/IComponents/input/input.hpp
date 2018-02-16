@@ -25,26 +25,21 @@ namespace nts {
 		static unsigned int id;
 
 		std::string _id;
-		Output _output;
-
-		// linkPin_t errorLink =
+		std::array<Output, 1> _outputs;
 
 		static const std::size_t _nbPins = 1;
 		const Ref _pinsRef[_nbPins] = {
-			{
+			{ /* p1 -> _outputs[0] */
 				PIN_OUTPUT,
 				[&]() {
-					if (_output.cycle == cycle_g) {
-						return _output.state;
+					if (_outputs[0].cycle == cycle_g) {
+						return _outputs[0].state;
 					}
-					_output.cycle = cycle_g;
+					_outputs[0].cycle = cycle_g;
 					/* Compute dependencies */
-					return _output.state;
+					return _outputs[0].state;
 				},
-				[](IComponent &, std::size_t)
-				{
-					throw nts::LinkError();
-				}
+				nullptr
 			}
 		};
 	};

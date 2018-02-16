@@ -8,7 +8,6 @@
 #include <sstream>
 
 #include "Circuit.hpp"
-#include "ExecErrors.hpp"
 #include "output.hpp"
 
 unsigned int nts::Coutput::id = 0;
@@ -27,7 +26,7 @@ _id{ value }
 
 nts::Tristate nts::Coutput::getState()
 {
-	return COMPUTE(_input);
+	return COMPUTE_REF(_inputs[0]);
 }
 
 nts::Tristate nts::Coutput::compute(std::size_t pin)
@@ -35,7 +34,7 @@ nts::Tristate nts::Coutput::compute(std::size_t pin)
 	if (pin > _nbPins) {
 		throw PinNExistError{ _id, pin };
 	}
-	return _pinsRef[pin - 1].compute();
+	return COMPUTE(_pinsRef[pin - 1]);
 }
 
 void nts::Coutput::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
@@ -43,15 +42,30 @@ void nts::Coutput::setLink(std::size_t pin, nts::IComponent &other, std::size_t 
 	if (pin > _nbPins) {
 		throw PinNExistError{ _id, pin };
 	}
+	if (_pinsRef[pin - 1].info == PIN_UNUSED) {
+		throw UnvalidLinkError{};
+	}
 	if (_pinsRef[pin - 1].info == PIN_INPUT) {
+		if (linker_g == PIN_UNUSED) {
+			linker_g = PIN_INPUT;
+			other.setLink(otherPin, *this, pin);
+		}
+		if (linker_g == PIN_INPUT) {
+			throw LinkError{ "Inputs" };
+		}
 		_pinsRef[pin - 1].link(other, otherPin);
-	} else {
+	} else { /* _pinsRef[pin - 1].info == PIN_OUTPUT */
+		if (linker_g == PIN_OUTPUT) {
+			throw LinkError{ "Outputs" };
+		}
+		linker_g = PIN_OUTPUT;
 		other.setLink(otherPin, *this, pin);
 	}
+	linker_g = PIN_UNUSED;
 }
 
 void nts::Coutput::dump() const
 {
 	std::cout << _id << ':' << std::endl;
-	std::cout << '\t' << COMPUTE(_input) << std::endl;
+	std::cout << '\t' << COMPUTE_REF(_inputs[0]) << std::endl;
 }
