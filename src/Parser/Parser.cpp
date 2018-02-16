@@ -68,6 +68,7 @@ bool nts::Parser::parsChipsets(std::string line)
 	if (_chipsets.find(vec[1]) != _chipsets.end()) {
 		throw nts::ComponentExistError{ vec[1] };
 	}
+	_circuit.componentFactory(vec[0], vec[1]);
 	_chipsets.insert(make_pair(vec[1], vec[0]));
 	return true;
 }
