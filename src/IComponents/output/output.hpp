@@ -29,15 +29,20 @@ namespace nts {
 		std::string _id;
 		std::array<Input, 1> _inputs;
 
+		linkPin_t linkerFactory(std::size_t p)
+		{
+			return [&, p](IComponent &link, std::size_t pin) {
+				_inputs[p].link = &link;
+				_inputs[p].pin = pin;
+			};
+		}
+
 		static const std::size_t _nbPins = 1;
 		const Ref _pinsRef[_nbPins] = {
 			{ /* p1 -> _inputs[0] */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[0]);},
-				[&](IComponent &link, std::size_t pin) {
-					_inputs[0].link = &link;
-					_inputs[0].pin = pin;
-				}
+				linkerFactory(0)
 			}
 		};
 	};

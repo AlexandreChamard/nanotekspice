@@ -27,18 +27,24 @@ namespace nts {
 		std::string _id;
 		std::array<Output, 1> _outputs;
 
+		computePin_t computeFactory(std::size_t p, computePin_t comp)
+		{
+			return [&, p, comp](){
+				if (_outputs[p].cycle == cycle_g) {
+					return _outputs[p].state;
+				}
+				_outputs[p].cycle = cycle_g;
+				return comp();
+			};
+		}
+
 		static const std::size_t _nbPins = 1;
 		const Ref _pinsRef[_nbPins] = {
 			{ /* p1 -> _outputs[0] */
 				PIN_OUTPUT,
-				[&]() {
-					if (_outputs[0].cycle == cycle_g) {
-						return _outputs[0].state;
-					}
-					_outputs[0].cycle = cycle_g;
-					/* Compute dependencies */
+				computeFactory(0, [&](){
 					return _outputs[0].state;
-				},
+				}),
 				nullptr
 			}
 		};

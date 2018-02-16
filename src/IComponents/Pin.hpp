@@ -42,5 +42,5 @@ namespace nts {
 	};
 
 	#define COMPUTE_REF(i) ((i).link ? (i).link->compute((i).pin) : Tristate::UNDEFINED)
-	#define COMPUTE(i) (i.compute != nullptr ? i.compute() : Tristate::UNDEFINED)
+	#define COMPUTE(i) (i.compute ? i.compute() : Tristate::UNDEFINED)
 }

@@ -27,65 +27,64 @@ namespace nts {
 		std::array<Output, 4> _outputs;
 		std::array<Input, 8> _inputs;
 
+		linkPin_t linkerFactory(std::size_t p)
+		{
+			return [&, p](IComponent &link, std::size_t pin) {
+				_inputs[p].link = &link;
+				_inputs[p].pin = pin;
+			};
+		}
+
+		computePin_t computeFactory(std::size_t p, computePin_t comp)
+		{
+			return [&, p, comp](){
+				if (_outputs[p].cycle == cycle_g) {
+					return _outputs[p].state;
+				}
+				_outputs[p].cycle = cycle_g;
+				return comp();
+			};
+		}
+
 		static const std::size_t _nbPins = 14;
 		const Ref _pinsRef[_nbPins] = {
 			{ /* P1 -> _inputs[0] */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[0]);},
-				[&](IComponent &link, std::size_t pin) {
-					_inputs[0].link = &link;
-					_inputs[0].pin = pin;
-				}
+				linkerFactory(0)
 			},
 			{ /* P2 -> _inputs[1] */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[1]);},
-				[&](IComponent &link, std::size_t pin) {
-					_inputs[1].link = &link;
-					_inputs[1].pin = pin;
-				}
+				linkerFactory(1)
 			},
 			{ /* P3 -> _outputs[0] */
 				PIN_OUTPUT,
-				[&]() {
-					if (_outputs[0].cycle == cycle_g) {
-						return _outputs[0].state;
-					}
-					_outputs[0].cycle = cycle_g;
+				computeFactory(0, [&](){
 					return _outputs[0].state =
 					!(COMPUTE_REF(_inputs[0]) |
 					COMPUTE_REF(_inputs[1]));
-				},
+				}),
 				nullptr
 			},
 			{ /* P4 -> _outputs[1] */
 				PIN_OUTPUT,
-				[&]() {
-					if (_outputs[1].cycle == cycle_g) {
-						return _outputs[1].state;
-					}
-					_outputs[1].cycle = cycle_g;
+				computeFactory(1, [&](){
 					return _outputs[1].state =
 					!(COMPUTE_REF(_inputs[2]) |
 					COMPUTE_REF(_inputs[3]));
-				},
+				}),
 				nullptr
 			},
 			{ /* P5 -> _inputs[2] */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[2]);},
-				[&](IComponent &link, std::size_t pin) {
-					_inputs[2].link = &link;
-					_inputs[2].pin = pin;
-				}
+				linkerFactory(2)
 			},
 			{ /* P6 -> _inputs[3] */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[3]);},
-				[&](IComponent &link, std::size_t pin) {
-					_inputs[3].link = &link;
-					_inputs[3].pin = pin;
-				}
+				linkerFactory(3)
 			},
 			{ /* P7 */
 				PIN_UNUSED,
@@ -95,60 +94,40 @@ namespace nts {
 			{ /* P8 -> _inputs[4] */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[4]);},
-				[&](IComponent &link, std::size_t pin) {
-					_inputs[4].link = &link;
-					_inputs[4].pin = pin;
-				}
+				linkerFactory(4)
 			},
 			{ /* P9 -> _inputs[5] */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[5]);},
-				[&](IComponent &link, std::size_t pin) {
-					_inputs[5].link = &link;
-					_inputs[5].pin = pin;
-				}
+				linkerFactory(5)
 			},
 			{ /* P10 -> _outputs[2] */
 				PIN_OUTPUT,
-				[&]() {
-					if (_outputs[2].cycle == cycle_g) {
-						return _outputs[2].state;
-					}
-					_outputs[2].cycle = cycle_g;
+				computeFactory(2, [&](){
 					return _outputs[2].state =
 					!(COMPUTE_REF(_inputs[4]) |
 					COMPUTE_REF(_inputs[5]));
-				},
+				}),
 				nullptr
 			},
 			{ /* P11 -> _outputs[3] */
 				PIN_OUTPUT,
-				[&]() {
-					if (_outputs[3].cycle == cycle_g) {
-						return _outputs[3].state;
-					}
-					_outputs[3].cycle = cycle_g;
+				computeFactory(3, [&](){
 					return _outputs[2].state =
 					!(_inputs[4].link->compute(_inputs[4].pin) |
 					_inputs[5].link->compute(_inputs[5].pin));
-				},
+				}),
 				nullptr
 			},
 			{ /* P12 -> _inputs[6] */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[6]);},
-				[&](IComponent &link, std::size_t pin) {
-					_inputs[6].link = &link;
-					_inputs[6].pin = pin;
-				}
+				linkerFactory(6)
 			},
 			{ /* P13 -> _inputs[7] */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[7]);},
-				[&](IComponent &link, std::size_t pin) {
-					_inputs[7].link = &link;
-					_inputs[7].pin = pin;
-				}
+				linkerFactory(7)
 			},
 			{ /* P14 */
 				PIN_UNUSED,
