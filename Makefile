@@ -32,45 +32,54 @@ CXXFLAGS	+=	-I./src/Type
 CXXFLAGS	+=	-I./src/Shell
 CXXFLAGS	+=	-I./src/Circuit
 CXXFLAGS	+=	-I./src/Parser
-CXXFLAGS	+=	-I./src/IComponents
+CXXFLAGS	+=	-I./src/Components
 CXXFLAGS	+=	-I./src/Errors
-
 
 # LDFLAGS		=
 
-SRC		=	src/main.cpp				\
-			src/Circuit/Circuit.cpp			\
-			src/Parser/Parser.cpp			\
-			src/Lib/ParsFile.cpp			\
-			src/Lib/Tools.cpp			\
-			src/Type/Bool.cpp			\
-			src/IComponents/4001/4001.cpp		\
-			src/IComponents/4011/4011.cpp		\
-			src/IComponents/4013/4013.cpp		\
-			src/IComponents/4030/4030.cpp		\
-			src/IComponents/4069/4069.cpp		\
-			src/IComponents/4071/4071.cpp		\
-			src/IComponents/4081/4081.cpp		\
-			src/IComponents/4512/4512.cpp		\
-			src/IComponents/default/default.cpp	\
-			src/IComponents/false/false.cpp		\
-			src/IComponents/clock/clock.cpp		\
-			src/IComponents/input/input.cpp		\
-			src/IComponents/output/output.cpp	\
-			src/IComponents/true/true.cpp		\
+SRC		=	main.cpp				\
+			Circuit/Circuit.cpp			\
+			Parser/Parser.cpp			\
+			Lib/ParsFile.cpp			\
+			Lib/Tools.cpp				\
+			Type/Bool.cpp				\
+			Components/4001/4001.cpp		\
+			Components/4011/4011.cpp		\
+			Components/4013/4013.cpp		\
+			Components/4030/4030.cpp		\
+			Components/4069/4069.cpp		\
+			Components/4071/4071.cpp		\
+			Components/4081/4081.cpp		\
+			Components/4512/4512.cpp		\
+			Components/Default/Default.cpp		\
+			Components/False/False.cpp		\
+			Components/Clock/Clock.cpp		\
+			Components/Input/Input.cpp		\
+			Components/Output/Output.cpp		\
+			Components/True/True.cpp		\
 
-OBJ		=	$(SRC:.cpp=.o)
+SDIR		=	src
+ODIR		=	obj
+
+OBJ		=	$(addprefix $(ODIR)/,$(SRC:.cpp=.o))
 
 all		:	$(NAME)
 
 $(NAME)		:	$(OBJ)
 			$(CXX) -o $(NAME) $(OBJ) $(LDFLAGS) $(CXXFLAGS)
 
+$(ODIR)/%.o	:	$(SDIR)/%.cpp
+			@ var=$@ && mkdir -p $${var%/*}
+			$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+
 clean		:
-			$(RM) $(OBJ)
+			@ $(RM) -r $(ODIR)
+			@ echo remove $(ODIR)
 
 fclean		:	clean
-			$(RM) $(NAME)
+			@ $(RM) $(NAME)
+			@ echo remove $(NAME)
 
 re		:	fclean all
 

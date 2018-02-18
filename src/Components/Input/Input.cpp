@@ -8,36 +8,40 @@
 #include <sstream>
 
 #include "Circuit.hpp"
-#include "output.hpp"
+#include "Input.hpp"
 
-unsigned int nts::Coutput::id = 0;
+unsigned int nts::Cinput::id = 0;
 
-nts::Coutput::Coutput(std::string const &value):
+nts::Cinput::Cinput(std::string const &value):
 _id{ value }
 {
 	if (_id.size() == 0) {
 		std::stringstream sid;
 
-		sid << "Coutput::" << id;
+		sid << "Cinput::" << id;
 		_id = sid.str();
 	}
 	id++;
 }
 
-nts::Tristate nts::Coutput::getState()
+void nts::Cinput::setState(Tristate state)
 {
-	return COMPUTE_REF(_inputs[0]);
+	_outputs[0].state = state;
 }
 
-nts::Tristate nts::Coutput::compute(std::size_t pin)
+void nts::Cinput::setState(bool state)
 {
-	if (pin > _nbPins) {
-		throw PinNExistError{ _id, pin };
-	}
+	_outputs[0].state = Tristate(state);
+}
+
+nts::Tristate nts::Cinput::compute(std::size_t pin)
+{
+	if (pin > _nbPins) throw PinNExistError{ _id, pin };
+
 	return COMPUTE(_pinsRef[pin - 1]);
 }
 
-void nts::Coutput::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
+void nts::Cinput::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
 	if (pin > _nbPins) {
 		throw PinNExistError{ _id, pin };
@@ -64,8 +68,8 @@ void nts::Coutput::setLink(std::size_t pin, nts::IComponent &other, std::size_t 
 	linker_g = PIN_UNUSED;
 }
 
-void nts::Coutput::dump() const
+void nts::Cinput::dump() const
 {
 	std::cout << _id << ':' << std::endl;
-	std::cout << '\t' << COMPUTE_REF(_inputs[0]) << std::endl;
+	std::cout << '\t' << _outputs[0].state << std::endl;
 }

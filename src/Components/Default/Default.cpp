@@ -8,7 +8,7 @@
 #include <sstream>
 
 #include "Circuit.hpp"
-#include "default.hpp"
+#include "Default.hpp"
 
 unsigned int nts::Cdefault::id = 0;
 

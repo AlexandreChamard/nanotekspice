@@ -11,11 +11,11 @@
 #include <memory>
 #include <vector>
 #include "IComponents.hpp"
-#include "input/input.hpp"
-#include "output/output.hpp"
-#include "clock/clock.hpp"
-#include "true/true.hpp"
-#include "false/false.hpp"
+#include "Input/Input.hpp"
+#include "Output/Output.hpp"
+#include "Clock/Clock.hpp"
+#include "True/True.hpp"
+#include "False/False.hpp"
 #include "4001/4001.hpp"
 #include "4011/4011.hpp"
 #include "4013/4013.hpp"

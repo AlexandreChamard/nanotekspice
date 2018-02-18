@@ -3,5 +3,5 @@
 -Isrc/Shell
 -Isrc/Circuit
 -Isrc/Parser
--Isrc/IComponents
+-Isrc/Components
 -Isrc/Errors
