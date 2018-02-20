@@ -10,7 +10,8 @@
 #include <fstream>
 #include <string>
 #include <unordered_map>
-#include "Circuit.hpp"
+#include <vector>
+#include "ComponentFactory.hpp"
 
 namespace nts {
 
@@ -23,7 +24,7 @@ namespace nts {
 
 	class Parser {
 	public:
-		Parser(Circuit &);
+		Parser(ComponentFactory &);
 		~Parser() = default;
 		Parser(Parser const &) = delete;
 		Parser(Parser &&) = delete;
@@ -42,7 +43,7 @@ namespace nts {
 
 
 	private:
-		Circuit &_circuit;
+		ComponentFactory &_factory;
 		std::unordered_map<std::string, std::string> _chipsets;
 		std::vector<Link> _links;
 

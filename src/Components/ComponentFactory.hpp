@@ -16,6 +16,7 @@
 #include "Clock/Clock.hpp"
 #include "True/True.hpp"
 #include "False/False.hpp"
+#include "BinSum/BinSum.hpp"
 #include "4001/4001.hpp"
 #include "4011/4011.hpp"
 #include "4013/4013.hpp"
@@ -32,7 +33,7 @@ namespace nts {
 
 	class ComponentFactory {
 	public:
-		ComponentFactory() = default;
+		ComponentFactory();
 		~ComponentFactory() = default;
 		ComponentFactory(ComponentFactory const &) = delete;
 		ComponentFactory(ComponentFactory &&) = delete;
@@ -60,11 +61,11 @@ namespace nts {
 		createComponent_t creatorFactory()
 		{
 			return [](std::string const &v){
-				// return std::make_unique<C>(C(v));
 				return std::unique_ptr<C>(new C(v));
 			};
 		}
 
+		/* component who derive than ComponentFactory must be initiate in the constructor */
 		std::unordered_map<std::string, createComponent_t> _map = {
 			{"input", nullptr},
 			{"output", nullptr},
@@ -78,7 +79,8 @@ namespace nts {
 			{"4512", creatorFactory<C4512>()},
 			{"true", creatorFactory<Ctrue>()},
 			{"false", creatorFactory<Cfalse>()},
-			{"clock", creatorFactory<Cclock>()}
+			{"clock", creatorFactory<Cclock>()},
+			{"binSum", creatorFactory<CbinSum>()}
 		};
 	};
 }

@@ -7,8 +7,8 @@
 
 #include <sstream>
 
-#include "Circuit.hpp"
 #include "4008.hpp"
+#include "Parser.hpp"
 
 unsigned int nts::C4008::id = 0;
 
@@ -22,6 +22,17 @@ _id{ value }
 		_id = sid.str();
 	}
 	id++;
+	std::unique_ptr<Parser> parser(new Parser(*this));
+	(*parser)("components/pre4008.nts");
+	(*ComponentFactory::_inputs["A4"]).setHandle(&_inputs[0]);
+	(*ComponentFactory::_inputs["B3"]).setHandle(&_inputs[1]);
+	(*ComponentFactory::_inputs["A3"]).setHandle(&_inputs[2]);
+	(*ComponentFactory::_inputs["B2"]).setHandle(&_inputs[3]);
+	(*ComponentFactory::_inputs["A2"]).setHandle(&_inputs[4]);
+	(*ComponentFactory::_inputs["B1"]).setHandle(&_inputs[5]);
+	(*ComponentFactory::_inputs["A1"]).setHandle(&_inputs[6]);
+	(*ComponentFactory::_inputs["C1"]).setHandle(&_inputs[7]);
+	(*ComponentFactory::_inputs["B4"]).setHandle(&_inputs[8]);
 }
 
 nts::Tristate nts::C4008::compute(std::size_t pin)

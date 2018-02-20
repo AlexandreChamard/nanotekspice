@@ -32,7 +32,7 @@ int main(int ac, char **av)
 	signal(SIGINT, handler);
 
 	parser(av[1]);
-	parser(ac - 2, av + 2);
+	circuit.setStart(ac - 2, av + 2);
 	circuit.simulate();
 	circuit.display();
 	shell.loop();

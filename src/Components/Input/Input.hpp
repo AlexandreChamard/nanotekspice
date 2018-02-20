@@ -20,11 +20,14 @@ namespace nts {
 		void dump() const override;
 		void setState(Tristate state);
 		void setState(bool state);
+		void setHandle(Input *link);
 
 	private:
 		static unsigned int id;
 
 		std::string _id;
+		bool _isHandle = false;
+		Input *_input = nullptr;
 		std::array<Output, 1> _outputs;
 
 		computePin_t computeFactory(std::size_t p, computePin_t comp)
@@ -43,6 +46,9 @@ namespace nts {
 			{ /* p1 -> _outputs[0] */
 				PIN_OUTPUT,
 				computeFactory(0, [&](){
+					if (_isHandle == true && _input != nullptr) {
+						return COMPUTE_REF(*_input);
+					}
 					return _outputs[0].state;
 				}),
 				nullptr

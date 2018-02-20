@@ -45,6 +45,7 @@ SRC		=	main.cpp				\
 			Type/Bool.cpp				\
 			Components/ComponentFactory.cpp		\
 			Components/4001/4001.cpp		\
+			Components/4008/4008.cpp		\
 			Components/4011/4011.cpp		\
 			Components/4013/4013.cpp		\
 			Components/4030/4030.cpp		\
@@ -57,6 +58,7 @@ SRC		=	main.cpp				\
 			Components/Input/Input.cpp		\
 			Components/Output/Output.cpp		\
 			Components/True/True.cpp		\
+			Components/BinSum/BinSum.cpp		\
 
 SDIR		=	src
 ODIR		=	obj

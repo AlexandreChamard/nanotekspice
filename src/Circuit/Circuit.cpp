@@ -9,6 +9,7 @@
 
 #include "Circuit.hpp"
 #include "Tools.hpp"
+#include "Cutline.hpp"
 #include "ParsingErrors.hpp"
 
 std::size_t nts::cycle_g = 0;
@@ -50,7 +51,8 @@ void nts::Circuit::loop()
 	while (inLoop == true) {
 		simulate();
 		display();
-		sleep(1);
+		std::cout << std::endl;
+		usleep(500000);
 	}
 }
 
@@ -75,4 +77,15 @@ void nts::Circuit::setValue(std::string const &name, std::string const &value)
 		throw nts::NBoolError{ value };
 	}
 	_inputs[name]->setState(Tristate(v));
+}
+
+void nts::Circuit::setStart(int n, char **applies)
+{
+	lib::Cutline<'=', '\0'> cutter;
+
+	for (int i = 0; i < n; i++) {
+		std::string str{ applies[i] };
+		auto vec = cutter(str);
+		setValue(vec[0], vec[1]);
+	}
 }

@@ -8,6 +8,12 @@
 #include "ParsingErrors.hpp"
 
 #include "ComponentFactory.hpp"
+#include "4008/4008.hpp"
+
+nts::ComponentFactory::ComponentFactory()
+{
+	_map.insert(make_pair("4008", creatorFactory<C4008>()));
+}
 
 nts::output_t nts::ComponentFactory::createOutput(std::string const &value)
 {

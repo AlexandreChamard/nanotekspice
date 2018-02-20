@@ -25,8 +25,8 @@ namespace nts {
 		static unsigned int id;
 
 		std::string _id;
-		std::array<Output, 4> _outputs;
-		std::array<Input, 8> _inputs;
+		std::array<Output, 5> _outputs;
+		std::array<Input, 9> _inputs;
 
 		linkPin_t linkerFactory(std::size_t p)
 		{
@@ -47,86 +47,94 @@ namespace nts {
 			};
 		}
 
-		static const std::size_t _nbPins = 14;
+		static const std::size_t _nbPins = 16;
 		const Ref _pinsRef[_nbPins] = {
-			{ /* P1 -> _inputs[0] */
+			{ /* P1 -> _inputs[0] A4 */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[0]);},
 				linkerFactory(0)
 			},
-			{ /* P2 -> _inputs[1] */
+			{ /* P2 -> _inputs[1] B3 */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[1]);},
 				linkerFactory(1)
 			},
-			{ /* P3 -> _outputs[0] */
-				PIN_OUTPUT,
-				computeFactory(0, [&](){
-					return !(COMPUTE_REF(_inputs[0]) |
-					COMPUTE_REF(_inputs[1]));
-				}),
-				nullptr
-			},
-			{ /* P4 -> _outputs[1] */
-				PIN_OUTPUT,
-				computeFactory(1, [&](){
-					return !(COMPUTE_REF(_inputs[2]) |
-					COMPUTE_REF(_inputs[3]));
-				}),
-				nullptr
-			},
-			{ /* P5 -> _inputs[2] */
+			{ /* P3 -> _inputs[2] A3 */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[2]);},
 				linkerFactory(2)
 			},
-			{ /* P6 -> _inputs[3] */
+			{ /* P4 -> _inputs[3] B2 */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[3]);},
 				linkerFactory(3)
 			},
-			{ /* P7 */
-				PIN_UNUSED,
-				nullptr,
-				nullptr
-			},
-			{ /* P8 -> _inputs[4] */
+			{ /* P5 -> _inputs[4] A2 */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[4]);},
 				linkerFactory(4)
 			},
-			{ /* P9 -> _inputs[5] */
+			{ /* P6 -> _inputs[5] B1 */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[5]);},
 				linkerFactory(5)
 			},
-			{ /* P10 -> _outputs[2] */
-				PIN_OUTPUT,
-				computeFactory(2, [&](){
-					return !(COMPUTE_REF(_inputs[4]) |
-					COMPUTE_REF(_inputs[5]));
-				}),
-				nullptr
-			},
-			{ /* P11 -> _outputs[3] */
-				PIN_OUTPUT,
-				computeFactory(3, [&](){
-					return !(COMPUTE_REF(_inputs[6]) |
-					COMPUTE_REF(_inputs[7]));
-				}),
-				nullptr
-			},
-			{ /* P12 -> _inputs[6] */
+			{ /* P7 -> _inputs[6] A1 */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[6]);},
 				linkerFactory(6)
 			},
-			{ /* P13 -> _inputs[7] */
+			{ /* P8 */
+				PIN_UNUSED,
+				nullptr,
+				nullptr
+			},
+			{ /* P9 -> _inputs[7] C1 */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[7]);},
 				linkerFactory(7)
 			},
-			{ /* P14 */
+			{ /* P10 -> _outputs[0] S1 */
+				PIN_OUTPUT,
+				computeFactory(0, [&](){
+					return (*ComponentFactory::_outputs["S1"]).compute(1);
+				}),
+				nullptr
+			},
+			{ /* P11 -> _outputs[1] S2 */
+				PIN_OUTPUT,
+				computeFactory(1, [&](){
+					return (*ComponentFactory::_outputs["S2"]).compute(1);
+				}),
+				nullptr
+			},
+			{ /* P12 -> _outputs[2] S3 */
+				PIN_OUTPUT,
+				computeFactory(2, [&](){
+					return (*ComponentFactory::_outputs["S3"]).compute(1);
+				}),
+				nullptr
+			},
+			{ /* P13 -> _outputs[3] S4 */
+				PIN_OUTPUT,
+				computeFactory(3, [&](){
+					return (*ComponentFactory::_outputs["S4"]).compute(1);
+				}),
+				nullptr
+			},
+			{ /* P14 -> _outputs[4] CO */
+				PIN_OUTPUT,
+				computeFactory(4, [&](){
+					return (*ComponentFactory::_outputs["CO"]).compute(1);
+				}),
+				nullptr
+			},
+			{ /* P15 -> _inputs[8] B4 */
+				PIN_INPUT,
+				[&]() {return COMPUTE_REF(_inputs[8]);},
+				linkerFactory(8)
+			},
+			{ /* P16 */
 				PIN_UNUSED,
 				nullptr,
 				nullptr

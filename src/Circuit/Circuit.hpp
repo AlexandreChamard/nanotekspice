@@ -30,6 +30,7 @@ namespace nts {
 		void dump();
 		void simulate();
 		void loop();
+		void setStart(int, char **);
 
 		static volatile sig_atomic_t inLoop;
 	};

@@ -3,3 +3,9 @@ output: p10 p11 p12 p13 p14
 ??    : p8 p16
 
 p14 = p1 & p2 & !p3
+
+1 1 1 -> 1 1
+au moin 2 	-> co == 1
+nombre impaire	-> sum == 1
+sum = ai ^ bi ^ ci
+co = (ai & bi) | (ai & ci) | (bi & ci)
