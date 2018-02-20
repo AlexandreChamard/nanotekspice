@@ -25,9 +25,11 @@ namespace nts {
 	private:
 		static unsigned int id;
 
-		std::string _id;
 		bool _isHandle = false;
 		Input *_input = nullptr;
+
+	protected:
+		std::string _id;
 		std::array<Output, 1> _outputs;
 
 		computePin_t computeFactory(std::size_t p, computePin_t comp)

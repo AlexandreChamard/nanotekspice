@@ -65,7 +65,8 @@ void nts::Shell<T>::loop()
 		if (_builtins[line]) {
 			(this->*_builtins[line])();
 		} else if (*line && !std::cin.eof()) {
-			std::cerr << line << ": command not found" << std::endl;
+			std::cout << "Unrecognized command \'" << line << "\'" << std::endl;
+			// std::cerr << line << ": command not found" << std::endl;
 		}
 	}
 }

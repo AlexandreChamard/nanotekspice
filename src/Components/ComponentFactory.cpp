@@ -35,7 +35,7 @@ void nts::ComponentFactory::componentFactory(std::string const &type, std::strin
 	if (_map.find(type) == _map.end()) {
 		throw nts::ComponentNExistError{ type };
 	}
-	if (type == "input") {
+	if (type == "input" || type == "clock") {
 		_inputs.insert(std::make_pair(value, createInput(value)));
 	} else if (type == "output") {
 		_outputs.insert(std::make_pair(value, createOutput(value)));

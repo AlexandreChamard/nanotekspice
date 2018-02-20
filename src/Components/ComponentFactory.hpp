@@ -69,6 +69,7 @@ namespace nts {
 		std::unordered_map<std::string, createComponent_t> _map = {
 			{"input", nullptr},
 			{"output", nullptr},
+			{"clock", nullptr},
 			{"4001", creatorFactory<C4001>()},
 			{"4011", creatorFactory<C4011>()},
 			{"4013", creatorFactory<C4013>()},
@@ -79,7 +80,6 @@ namespace nts {
 			{"4512", creatorFactory<C4512>()},
 			{"true", creatorFactory<Ctrue>()},
 			{"false", creatorFactory<Cfalse>()},
-			{"clock", creatorFactory<Cclock>()},
 			{"binSum", creatorFactory<CbinSum>()}
 		};
 	};

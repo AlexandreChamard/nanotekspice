@@ -8,10 +8,10 @@
 #pragma once
 
 #include <array>
-#include "IComponents.hpp"
+#include "Input/Input.hpp"
 
 namespace nts {
-	class Cclock : public IComponent {
+	class Cclock : public Cinput {
 	public:
 		Cclock(std::string const &value = "");
 		~Cclock() override = default;
@@ -22,9 +22,6 @@ namespace nts {
 
 	private:
 		static unsigned int id;
-
-		std::string _id;
-		std::array<Output, 1> _outputs;
 
 		computePin_t computeFactory(std::size_t p, computePin_t comp)
 		{
@@ -42,7 +39,7 @@ namespace nts {
 			{ /* p1 -> _outputs[0] */
 				PIN_OUTPUT,
 				computeFactory(0, [&](){
-					return Tristate(cycle_g % 2);
+					return Tristate(_outputs[0].state + (cycle_g % 2));
 				}),
 				nullptr
 			}

@@ -6,6 +6,7 @@
 */
 
 #include <iostream>
+#include <exception>
 
 #include "Circuit.hpp"
 #include "Parser.hpp"
@@ -31,10 +32,15 @@ int main(int ac, char **av)
 	nts::Shell<nts::Circuit> shell{ &circuit };
 	signal(SIGINT, handler);
 
-	parser(av[1]);
-	circuit.setStart(ac - 2, av + 2);
-	circuit.simulate();
-	circuit.display();
-	shell.loop();
+	try {
+		parser(av[1]);
+		circuit.setStart(ac - 2, av + 2);
+		circuit.simulate();
+		circuit.display();
+		shell.loop();
+	} catch (std::exception &e) {
+		std::cerr << e.what() << std::endl;
+		return 84;
+	}
 	return 0;
 }

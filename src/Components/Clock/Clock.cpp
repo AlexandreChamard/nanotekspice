@@ -13,7 +13,7 @@
 unsigned int nts::Cclock::id = 0;
 
 nts::Cclock::Cclock(std::string const &value):
-_id{ value }
+Cinput{ value }
 {
 	if (_id.size() == 0) {
 		std::stringstream sid;

@@ -19,4 +19,4 @@ gate:4 gate:12
 gate:11 gate:9
 e:1 gate:8
 gate:10 inverter:1
-inverter:2 s:1 
+inverter:2 s:1
