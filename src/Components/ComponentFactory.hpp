@@ -41,12 +41,13 @@ namespace nts {
 
 	public:
 		void componentFactory(std::string const &type, std::string const &value);
+		void linkComponent(std::string const &, std::size_t, std::string const &, std::size_t);
+		IComponent *getComponent(std::string const &);
+
+	private:
 		component_t createComponent(std::string const &type, std::string const &value);
 		input_t createInput(std::string const &value);
 		output_t createOutput(std::string const &value);
-		void linkComponent(std::string const &, std::size_t, std::string const &, std::size_t);
-
-		IComponent *getComponent(std::string const &);
 
 	protected:
 		std::unordered_map<std::string, component_t> _components;
