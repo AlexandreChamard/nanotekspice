@@ -7,13 +7,13 @@
 
 #pragma once
 
+#include <signal.h>
 #include <unordered_map>
 #include <memory>
 #include <vector>
 #include "ComponentFactory.hpp"
 
 namespace nts {
-
 	class Circuit : public ComponentFactory {
 	public:
 		Circuit() = default;
@@ -29,7 +29,8 @@ namespace nts {
 		void display();
 		void dump();
 		void simulate();
-		// void loop();
+		void loop();
 
+		static volatile sig_atomic_t inLoop;
 	};
 }

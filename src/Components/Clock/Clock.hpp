@@ -21,13 +21,31 @@ namespace nts {
 		void dump() const override;
 
 	private:
-
-		nts::Tristate compute1(std::size_t pin);
-
-	private:
 		static unsigned int id;
 
 		std::string _id;
 		std::array<Output, 1> _outputs;
+
+		computePin_t computeFactory(std::size_t p, computePin_t comp)
+		{
+			return [&, p, comp](){
+				if (_outputs[p].cycle == cycle_g) {
+					return _outputs[p].state;
+				}
+				_outputs[p].cycle = cycle_g;
+				return _outputs[p].state = comp();
+			};
+		}
+
+		static const std::size_t _nbPins = 1;
+		const Ref _pinsRef[_nbPins] = {
+			{ /* p1 -> _outputs[0] */
+				PIN_OUTPUT,
+				computeFactory(0, [&](){
+					return Tristate(cycle_g % 2);
+				}),
+				nullptr
+			}
+		};
 	};
 }

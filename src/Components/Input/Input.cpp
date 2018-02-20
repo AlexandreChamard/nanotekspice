@@ -36,7 +36,9 @@ void nts::Cinput::setState(bool state)
 
 nts::Tristate nts::Cinput::compute(std::size_t pin)
 {
-	if (pin > _nbPins) throw PinNExistError{ _id, pin };
+	if (pin > _nbPins) {
+		throw PinNExistError{ _id, pin };
+	}
 
 	return COMPUTE(_pinsRef[pin - 1]);
 }

@@ -24,28 +24,53 @@ _id{ value }
 	id++;
 }
 
-
-nts::Tristate nts::Cclock::compute1(std::size_t __attribute__((unused)) pin)
-{
-	return _outputs[0].state = (nts::Tristate)(cycle_g % 2);
-}
-
 nts::Tristate nts::Cclock::compute(std::size_t pin)
 {
-	if (_outputs[pin].cycle == cycle_g)
-		return _outputs[pin].state;
-	_outputs[pin].cycle++;
-	return (_outputs[pin].compute)();
+	if (pin > _nbPins) {
+		throw PinNExistError{ _id, pin };
+	}
+
+	return COMPUTE(_pinsRef[pin - 1]);
 }
 
 void nts::Cclock::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
-	(void)pin;
-	(void)other;
-	(void)otherPin;
+	if (pin > _nbPins) {
+		throw PinNExistError{ _id, pin };
+	}
+	if (_pinsRef[pin - 1].info == PIN_UNUSED) {
+		throw UnvalidLinkError{};
+	}
+	if (_pinsRef[pin - 1].info == PIN_INPUT) {
+		if (linker_g == PIN_UNUSED) {
+			linker_g = PIN_INPUT;
+			other.setLink(otherPin, *this, pin);
+		}
+		if (linker_g == PIN_INPUT) {
+			throw LinkError{ "Inputs" };
+		}
+		_pinsRef[pin - 1].link(other, otherPin);
+	} else { /* _pinsRef[pin - 1].info == PIN_OUTPUT */
+		if (linker_g == PIN_OUTPUT) {
+			throw LinkError{ "Outputs" };
+		}
+		linker_g = PIN_OUTPUT;
+		other.setLink(otherPin, *this, pin);
+	}
+	linker_g = PIN_UNUSED;
 }
 
 void nts::Cclock::dump() const
 {
-
+	std::cout << _id << ": Clock\n";
+	for (std::size_t i = 0; i < _nbPins; i++) {
+		std::cout << "pin" << i << " ";
+		if (_pinsRef[i].info == PIN_INPUT) {
+			std::cout << " INPUT:" << COMPUTE(_pinsRef[i]);
+		} else if (_pinsRef[i].info == PIN_OUTPUT) {
+			std::cout << "OUTPUT:" << COMPUTE(_pinsRef[i]);
+		}
+		std::cout << '\n';
+	}
+	std::cout << std::endl;
 }

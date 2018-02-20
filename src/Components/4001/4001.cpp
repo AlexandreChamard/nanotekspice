@@ -26,7 +26,9 @@ _id{ value }
 
 nts::Tristate nts::C4001::compute(std::size_t pin)
 {
-	if (pin > _nbPins) throw PinNExistError{ _id, pin };
+	if (pin > _nbPins) {
+		throw PinNExistError{ _id, pin };
+	}
 
 	return COMPUTE(_pinsRef[pin - 1]);
 }

@@ -34,7 +34,7 @@ namespace nts {
 					return _outputs[p].state;
 				}
 				_outputs[p].cycle = cycle_g;
-				return comp();
+				return _outputs[p].state = comp();
 			};
 		}
 

@@ -106,7 +106,7 @@ void nts::Shell<T>::execSimulate()
 template<typename T>
 void nts::Shell<T>::execLoop()
 {
-	std::cout << "loop!" << std::endl;
+	_t->loop();
 }
 
 template<typename T>

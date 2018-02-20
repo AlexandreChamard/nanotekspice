@@ -6,10 +6,20 @@
 */
 
 #include <iostream>
+
 #include "Circuit.hpp"
 #include "Parser.hpp"
 #include "Shell.hpp"
 #include "Bool.hpp"
+
+static void handler(int)
+{
+	if (nts::Circuit::inLoop == false) {
+		std::cout << "(interrupt) use \"exit\" to exit.\n> " << std::flush;
+	} else {
+		nts::Circuit::inLoop = false;
+	}
+}
 
 int main(int ac, char **av)
 {
@@ -19,11 +29,10 @@ int main(int ac, char **av)
 	nts::Circuit circuit;
 	nts::Parser parser { circuit };
 	nts::Shell<nts::Circuit> shell{ &circuit };
+	signal(SIGINT, handler);
 
 	parser(av[1]);
 	parser(ac - 2, av + 2);
-	// parser.dump();
-
 	circuit.simulate();
 	circuit.display();
 	shell.loop();

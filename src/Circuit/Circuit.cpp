@@ -5,12 +5,15 @@
 ** description
 */
 
+#include <unistd.h>
+
 #include "Circuit.hpp"
 #include "Tools.hpp"
 #include "ParsingErrors.hpp"
 
 std::size_t nts::cycle_g = 0;
 nts::InfoPin nts::linker_g = nts::InfoPin::PIN_UNUSED;
+volatile sig_atomic_t nts::Circuit::inLoop = false;
 
 void nts::Circuit::display()
 {
@@ -38,6 +41,16 @@ void nts::Circuit::simulate()
 
 	for (auto &elem : _outputs) {
 		elem.second->compute(1);
+	}
+}
+
+void nts::Circuit::loop()
+{
+	inLoop = true;
+	while (inLoop == true) {
+		simulate();
+		display();
+		sleep(1);
 	}
 }
 
