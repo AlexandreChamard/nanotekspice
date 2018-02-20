@@ -111,8 +111,8 @@ namespace nts {
 			{ /* P11 -> _outputs[3] */
 				PIN_OUTPUT,
 				computeFactory(3, [&](){
-					return !(COMPUTE_REF(_inputs[4]) &
-					COMPUTE_REF(_inputs[5]));
+					return !(COMPUTE_REF(_inputs[6]) &
+					COMPUTE_REF(_inputs[7]));
 				}),
 				nullptr
 			},

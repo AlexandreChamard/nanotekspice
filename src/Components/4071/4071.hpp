@@ -61,16 +61,16 @@ namespace nts {
 			{ /* P3 -> _outputs[0] */
 				PIN_OUTPUT,
 				computeFactory(0, [&](){
-					return (COMPUTE_REF(_inputs[0]) |
-					COMPUTE_REF(_inputs[1]));
+					return COMPUTE_REF(_inputs[0]) |
+					COMPUTE_REF(_inputs[1]);
 				}),
 				nullptr
 			},
 			{ /* P4 -> _outputs[1] */
 				PIN_OUTPUT,
 				computeFactory(1, [&](){
-					return (COMPUTE_REF(_inputs[2]) |
-					COMPUTE_REF(_inputs[3]));
+					return COMPUTE_REF(_inputs[2]) |
+					COMPUTE_REF(_inputs[3]);
 				}),
 				nullptr
 			},
@@ -102,16 +102,16 @@ namespace nts {
 			{ /* P10 -> _outputs[2] */
 				PIN_OUTPUT,
 				computeFactory(2, [&](){
-					return (COMPUTE_REF(_inputs[4]) |
-					COMPUTE_REF(_inputs[5]));
+					return COMPUTE_REF(_inputs[4]) |
+					COMPUTE_REF(_inputs[5]);
 				}),
 				nullptr
 			},
 			{ /* P11 -> _outputs[3] */
 				PIN_OUTPUT,
 				computeFactory(3, [&](){
-					return (COMPUTE_REF(_inputs[4]) |
-					COMPUTE_REF(_inputs[5]));
+					return COMPUTE_REF(_inputs[6]) |
+					COMPUTE_REF(_inputs[7]);
 				}),
 				nullptr
 			},
