@@ -32,6 +32,7 @@ namespace nts {
 
 	public:
 		void operator()(std::string const &);
+		void operator()(int n, char **applies);
 		void dump();
 
 	private:

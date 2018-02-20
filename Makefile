@@ -43,6 +43,7 @@ SRC		=	main.cpp				\
 			Lib/ParsFile.cpp			\
 			Lib/Tools.cpp				\
 			Type/Bool.cpp				\
+			Components/ComponentFactory.cpp		\
 			Components/4001/4001.cpp		\
 			Components/4011/4011.cpp		\
 			Components/4013/4013.cpp		\

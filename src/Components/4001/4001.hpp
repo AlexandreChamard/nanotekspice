@@ -114,8 +114,8 @@ namespace nts {
 				PIN_OUTPUT,
 				computeFactory(3, [&](){
 					return _outputs[2].state =
-					!(_inputs[4].link->compute(_inputs[4].pin) |
-					_inputs[5].link->compute(_inputs[5].pin));
+					!(COMPUTE_REF(_inputs[6]) |
+					COMPUTE_REF(_inputs[7]));
 				}),
 				nullptr
 			},

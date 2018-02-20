@@ -10,10 +10,11 @@
 #include <iostream>
 #include <assert.h>
 
-#include "output/output.hpp"
-#include "input/input.hpp"
+#include "Output/Output.hpp"
+#include "Input/Input.hpp"
 #include "4001/4001.hpp"
 #include "ExecErrors.hpp"
+#include "Circuit.hpp"
 
 #define WHITE	"\e[0;97m"
 #define BLACK	"\e[1;30m"
@@ -33,3 +34,4 @@
 bool testInput();
 bool testOutput();
 bool testC4001();
+bool testComponentFactory();

@@ -6,29 +6,60 @@
 */
 
 #include "Circuit.hpp"
+#include "Tools.hpp"
 #include "ParsingErrors.hpp"
 
 std::size_t nts::cycle_g = 0;
 nts::InfoPin nts::linker_g = nts::InfoPin::PIN_UNUSED;
 
-std::unique_ptr<nts::IComponent> nts::Circuit::createComponent(std::string const &type, std::string const &value)
+void nts::Circuit::display()
 {
-	return _map[type](value);
+	for (auto &elem : _outputs) {
+		elem.second->display();
+	}
 }
 
-void nts::Circuit::componentFactory(std::string const &type, std::string const &value)
+void nts::Circuit::dump()
 {
-	if (_map.find(type) == _map.end()) {
-		throw nts::ComponentNExistError{ type };
+	for (auto &elem : _inputs) {
+		elem.second->dump();
 	}
-	if (type == "input") {
-		auto ptr2 = std::make_unique<Cinput>(Cinput(value));
-		_inputs.insert(std::make_pair(value, std::move(ptr2)));
-	} else if (type == "output") {
-		auto ptr2 = std::make_unique<Coutput>(Coutput(value));
-		_outputs.insert(std::make_pair(value, std::move(ptr2)));
-	} else {
-		auto ptr = createComponent(type, value);
-		_components.insert(std::make_pair(value, std::move(ptr)));
+	for (auto &elem : _components) {
+		elem.second->dump();
 	}
+	for (auto &elem : _outputs) {
+		elem.second->dump();
+	}
+}
+
+void nts::Circuit::simulate()
+{
+	cycle_g++;
+
+	for (auto &elem : _outputs) {
+		elem.second->compute(1);
+	}
+}
+
+void nts::Circuit::setValue(std::string const &name, Tristate value)
+{
+	if (_inputs.find(name) == _inputs.end()) {
+		throw nts::ComponentNExistError{ name };
+	}
+	_inputs[name]->setState(value);
+}
+
+void nts::Circuit::setValue(std::string const &name, std::string const &value)
+{
+	if (_inputs.find(name) == _inputs.end()) {
+		throw nts::ComponentNExistError{ name };
+	}
+	if (lib::Tools::isNumber(value, false) == false) {
+		throw nts::NNumberError{ value };
+	}
+	int v = std::atoi(value.c_str());
+	if (v != 0 && v != 1) {
+		throw nts::NBoolError{ value };
+	}
+	_inputs[name]->setState(Tristate(v));
 }

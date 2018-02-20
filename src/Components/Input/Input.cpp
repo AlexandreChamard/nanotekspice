@@ -70,6 +70,15 @@ void nts::Cinput::setLink(std::size_t pin, nts::IComponent &other, std::size_t o
 
 void nts::Cinput::dump() const
 {
-	std::cout << _id << ':' << std::endl;
-	std::cout << '\t' << _outputs[0].state << std::endl;
+	std::cout << _id << ": Input\n";
+	for (std::size_t i = 0; i < _nbPins; i++) {
+		std::cout << "pin" << i << " ";
+		if (_pinsRef[i].info == PIN_INPUT) {
+			std::cout << " INPUT:" << COMPUTE(_pinsRef[i]);
+		} else if (_pinsRef[i].info == PIN_OUTPUT) {
+			std::cout << "OUTPUT:" << COMPUTE(_pinsRef[i]);
+		}
+		std::cout << '\n';
+	}
+	std::cout << std::endl;
 }

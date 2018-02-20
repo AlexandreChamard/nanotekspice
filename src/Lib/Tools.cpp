@@ -36,6 +36,20 @@ std::vector<std::string> lib::Tools::splitline(std::string const &s, std::string
 	return vec;
 }
 
+bool lib::Tools::isNumber(std::string const &str, bool floating)
+{
+	std::stringstream sstr{ str };
+	double d;
+	long l;
+
+	if (floating == true) {
+		sstr >> d;
+	} else {
+		sstr >> l;
+	}
+	return (!sstr.fail() && sstr.eof());
+}
+
 std::ostream &operator<<(std::ostream &os, std::vector<std::string> const &vec)
 {
 	for (auto elem : vec) {

@@ -18,6 +18,7 @@ namespace lib {
 		/* split la string par le sep */
 		static std::vector<std::string> splitline(std::string const &, char sep);
 
+		static bool isNumber(std::string const &str, bool floating = true);
 	};
 }
 

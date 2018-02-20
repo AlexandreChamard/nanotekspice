@@ -18,6 +18,7 @@ namespace nts {
 		void setLink(std::size_t pin, IComponent &other,
 			std::size_t otherPin) override;
 		void dump() const override;
+		void display() const;
 		nts::Tristate getState();
 
 	private:
@@ -38,7 +39,7 @@ namespace nts {
 		}
 
 		static const std::size_t _nbPins = 1;
-		const Ref _pinsRef[_nbPins] = {
+		Ref _pinsRef[_nbPins] = {
 			{ /* p1 -> _inputs[0] */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[0]);},

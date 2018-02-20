@@ -39,7 +39,7 @@ nts::Tristate nts::Coutput::compute(std::size_t pin)
 
 void nts::Coutput::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
-	if (pin > _nbPins) {
+	if (pin > _nbPins || pin == 0) {
 		throw PinNExistError{ _id, pin };
 	}
 	if (_pinsRef[pin - 1].info == PIN_UNUSED) {
@@ -66,6 +66,20 @@ void nts::Coutput::setLink(std::size_t pin, nts::IComponent &other, std::size_t 
 
 void nts::Coutput::dump() const
 {
-	std::cout << _id << ':' << std::endl;
-	std::cout << '\t' << COMPUTE_REF(_inputs[0]) << std::endl;
+	std::cout << _id << ": Output\n";
+	for (std::size_t i = 0; i < _nbPins; i++) {
+		std::cout << "pin" << i << " ";
+		if (_pinsRef[i].info == PIN_INPUT) {
+			std::cout << " INPUT:" << COMPUTE(_pinsRef[i]);
+		} else if (_pinsRef[i].info == PIN_OUTPUT) {
+			std::cout << "OUTPUT:" << COMPUTE(_pinsRef[i]);
+		}
+		std::cout << '\n';
+	}
+	std::cout << std::endl;
+}
+
+void nts::Coutput::display() const
+{
+	std::cout << _id << '=' << COMPUTE_REF(_inputs[0]) << std::endl;
 }

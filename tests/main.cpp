@@ -14,6 +14,5 @@ int main()
 	TEST(testOutput);
 	TEST(testOutput);
 	TEST(testC4001);
-
-
+	TEST(testComponentFactory);
 }

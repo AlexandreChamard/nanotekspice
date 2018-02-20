@@ -32,7 +32,7 @@ CXXFLAGS	+=	-I../src/Type
 CXXFLAGS	+=	-I../src/Shell
 CXXFLAGS	+=	-I../src/Circuit
 CXXFLAGS	+=	-I../src/Parser
-CXXFLAGS	+=	-I../src/IComponents
+CXXFLAGS	+=	-I../src/Components
 CXXFLAGS	+=	-I../src/Errors
 
 # LDFLAGS		=
@@ -42,25 +42,27 @@ SRC		=	../src/Circuit/Circuit.cpp			\
 			../src/Lib/ParsFile.cpp				\
 			../src/Lib/Tools.cpp				\
 			../src/Type/Bool.cpp				\
-			../src/IComponents/4001/4001.cpp		\
-			../src/IComponents/4011/4011.cpp		\
-			../src/IComponents/4013/4013.cpp		\
-			../src/IComponents/4030/4030.cpp		\
-			../src/IComponents/4069/4069.cpp		\
-			../src/IComponents/4071/4071.cpp		\
-			../src/IComponents/4081/4081.cpp		\
-			../src/IComponents/4512/4512.cpp		\
-			../src/IComponents/default/default.cpp		\
-			../src/IComponents/false/false.cpp		\
-			../src/IComponents/clock/clock.cpp		\
-			../src/IComponents/input/input.cpp		\
-			../src/IComponents/output/output.cpp		\
-			../src/IComponents/true/true.cpp		\
+			../src/Components/ComponentFactory.cpp		\
+			../src/Components/4001/4001.cpp			\
+			../src/Components/4011/4011.cpp			\
+			../src/Components/4013/4013.cpp			\
+			../src/Components/4030/4030.cpp			\
+			../src/Components/4069/4069.cpp			\
+			../src/Components/4071/4071.cpp			\
+			../src/Components/4081/4081.cpp			\
+			../src/Components/4512/4512.cpp			\
+			../src/Components/Default/Default.cpp		\
+			../src/Components/False/False.cpp		\
+			../src/Components/Clock/Clock.cpp		\
+			../src/Components/Input/Input.cpp		\
+			../src/Components/Output/Output.cpp		\
+			../src/Components/True/True.cpp			\
 
 SRC		+=	main.cpp		\
 			input.cpp		\
 			output.cpp		\
 			4001.cpp		\
+			ComponentFactory.cpp	\
 
 OBJ		=	$(SRC:.cpp=.o)
 
