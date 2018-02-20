@@ -10,30 +10,26 @@
 #include <unordered_map>
 #include <memory>
 #include <vector>
-#include "IComponents.hpp"
+#include "ComponentFactory.hpp"
 
 namespace nts {
 
-	class Circuit {
+	class Circuit : public ComponentFactory {
 	public:
-		Circuit();
+		Circuit() = default;
 		~Circuit() = default;
 		Circuit(Circuit const &) = delete;
-		Circuit(Circuit &&) = default;
+		Circuit(Circuit &&) = delete;
 		Circuit &operator=(Circuit const &) = delete;
-		Circuit &operator=(Circuit &&) = default;
+		Circuit &operator=(Circuit &&) = delete;
 
 	public:
-		std::unique_ptr<IComponent> createComponent(std::string const &type, std::string const &value);
-		void addComponent(std::string const &);
-		void addInput(std::string const &);
-		void addOutput(std::string const &);
+		void setValue(std::string const &name, Tristate value);
+		void setValue(std::string const &name, std::string const &value);
+		void display();
+		void dump();
+		void simulate();
+		// void loop();
 
-	private:
-		using createComponent_t = std::unique_ptr<IComponent> (*)(std::string const &);
-		std::unordered_map<std::string, createComponent_t> _map;
-		std::vector<Output> _outputs;
-		std::vector<std::unique_ptr<IComponent>> _components;
-		std::vector<Input> _inputs;
 	};
 }

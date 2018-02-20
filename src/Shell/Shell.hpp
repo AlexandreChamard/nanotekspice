@@ -94,13 +94,13 @@ void nts::Shell<T>::execExit()
 template<typename T>
 void nts::Shell<T>::execDisplay()
 {
-	std::cout << "display!" << std::endl;
+	_t->display();
 }
 
 template<typename T>
 void nts::Shell<T>::execSimulate()
 {
-	std::cout << "simulate!" << std::endl;
+	_t->simulate();
 }
 
 template<typename T>
@@ -112,5 +112,5 @@ void nts::Shell<T>::execLoop()
 template<typename T>
 void nts::Shell<T>::execDump()
 {
-	std::cout << "dump!" << std::endl;
+	_t->dump();
 }

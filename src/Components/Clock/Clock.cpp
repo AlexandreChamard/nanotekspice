@@ -8,7 +8,7 @@
 #include <sstream>
 
 #include "Circuit.hpp"
-#include "clock.hpp"
+#include "Clock.hpp"
 
 unsigned int nts::Cclock::id = 0;
 

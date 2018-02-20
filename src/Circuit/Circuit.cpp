@@ -6,23 +6,60 @@
 */
 
 #include "Circuit.hpp"
-#include "4001/4001.hpp"
+#include "Tools.hpp"
 #include "ParsingErrors.hpp"
 
 std::size_t nts::cycle_g = 0;
 nts::InfoPin nts::linker_g = nts::InfoPin::PIN_UNUSED;
 
-nts::Circuit::Circuit()
+void nts::Circuit::display()
 {
-	_map["4001"] = [](std::string const &value) {
-		return std::unique_ptr<IComponent>{new C4001(value)};
-	};
+	for (auto &elem : _outputs) {
+		elem.second->display();
+	}
 }
 
-std::unique_ptr<nts::IComponent> nts::Circuit::createComponent(std::string const &type, std::string const &value)
+void nts::Circuit::dump()
 {
-	if (_map.find(type) == _map.end()) {
-		throw nts::ComponentNExistError{ type };
+	for (auto &elem : _inputs) {
+		elem.second->dump();
 	}
-	return _map[type](value);
+	for (auto &elem : _components) {
+		elem.second->dump();
+	}
+	for (auto &elem : _outputs) {
+		elem.second->dump();
+	}
+}
+
+void nts::Circuit::simulate()
+{
+	cycle_g++;
+
+	for (auto &elem : _outputs) {
+		elem.second->compute(1);
+	}
+}
+
+void nts::Circuit::setValue(std::string const &name, Tristate value)
+{
+	if (_inputs.find(name) == _inputs.end()) {
+		throw nts::ComponentNExistError{ name };
+	}
+	_inputs[name]->setState(value);
+}
+
+void nts::Circuit::setValue(std::string const &name, std::string const &value)
+{
+	if (_inputs.find(name) == _inputs.end()) {
+		throw nts::ComponentNExistError{ name };
+	}
+	if (lib::Tools::isNumber(value, false) == false) {
+		throw nts::NNumberError{ value };
+	}
+	int v = std::atoi(value.c_str());
+	if (v != 0 && v != 1) {
+		throw nts::NBoolError{ value };
+	}
+	_inputs[name]->setState(Tristate(v));
 }

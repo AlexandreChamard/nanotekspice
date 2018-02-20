@@ -8,7 +8,7 @@
 #include <sstream>
 
 #include "Circuit.hpp"
-#include "false.hpp"
+#include "False.hpp"
 
 unsigned int nts::Cfalse::id = 0;
 

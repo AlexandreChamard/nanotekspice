@@ -68,6 +68,7 @@ bool nts::Parser::parsChipsets(std::string line)
 	if (_chipsets.find(vec[1]) != _chipsets.end()) {
 		throw nts::ComponentExistError{ vec[1] };
 	}
+	_circuit.componentFactory(vec[0], vec[1]);
 	_chipsets.insert(make_pair(vec[1], vec[0]));
 	return true;
 }
@@ -87,6 +88,13 @@ bool nts::Parser::parsLinks(std::string line)
 	if (_chipsets.find(vec[2]) == _chipsets.end()) {
 		throw nts::ComponentNExistError{ vec[2] };
 	}
+	if (lib::Tools::isNumber(vec[1]) == false) {
+		throw nts::NNumberError{ vec[1] };
+	}
+	if (lib::Tools::isNumber(vec[3]) == false) {
+		throw nts::NNumberError{ vec[3] };
+	}
+	_circuit.linkComponent(vec[0], std::atoi(vec[1].c_str()), vec[2], std::atoi(vec[3].c_str()));
 	_links.push_back(Link{ vec[0], vec[1], vec[2], vec[3] });
 	return true;
 }
@@ -101,5 +109,16 @@ void nts::Parser::dump()
 	for (auto elem : _links) {
 		std::cout << elem.oname << " : " << elem.opin << " -> "
 		<< elem.iname << " : " << elem.ipin << std::endl;
+	}
+}
+
+void nts::Parser::operator()(int n, char **applies)
+{
+	lib::Cutline<'=', '\0'> cutter;
+
+	for (int i = 0; i < n; i++) {
+		std::string str{ applies[i] };
+		auto vec = cutter(str);
+		_circuit.setValue(vec[0], vec[1]);
 	}
 }

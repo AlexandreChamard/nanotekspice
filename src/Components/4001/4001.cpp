@@ -60,5 +60,15 @@ void nts::C4001::setLink(std::size_t pin, nts::IComponent &other, std::size_t ot
 
 void nts::C4001::dump() const
 {
-	/* to do */
+	std::cout << _id << ": 4001\n";
+	for (std::size_t i = 0; i < _nbPins; i++) {
+		std::cout << "pin" << i << " ";
+		if (_pinsRef[i].info == PIN_INPUT) {
+			std::cout << " INPUT:" << COMPUTE(_pinsRef[i]);
+		} else if (_pinsRef[i].info == PIN_OUTPUT) {
+			std::cout << "OUTPUT:" << COMPUTE(_pinsRef[i]);
+		}
+		std::cout << '\n';
+	}
+	std::cout << std::endl;
 }

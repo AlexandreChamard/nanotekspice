@@ -28,6 +28,36 @@ namespace nts {
 		std::string _msg;
 	};
 
+	class NNumberError : public std::exception {
+	public:
+		NNumberError(std::string const &msg = "") throw() :
+		_msg("\"" + msg + "\" is not a number") {}
+
+		char const *what() const throw() override {
+			return (_msg.c_str());
+		}
+
+		virtual ~NNumberError() throw(){}
+
+	private:
+		std::string _msg;
+	};
+
+	class NBoolError : public std::exception {
+	public:
+		NBoolError(std::string const &msg = "") throw() :
+		_msg("\"" + msg + "\" is not a boolean") {}
+
+		char const *what() const throw() override {
+			return (_msg.c_str());
+		}
+
+		virtual ~NBoolError() throw(){}
+
+	private:
+		std::string _msg;
+	};
+
 	class NoChipSecError : public std::exception {
 	public:
 		NoChipSecError() throw() {}
