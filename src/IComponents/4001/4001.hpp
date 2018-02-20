@@ -42,7 +42,7 @@ namespace nts {
 					return _outputs[p].state;
 				}
 				_outputs[p].cycle = cycle_g;
-				return comp();
+				return _outputs[p].state = comp();
 			};
 		}
 
@@ -61,8 +61,7 @@ namespace nts {
 			{ /* P3 -> _outputs[0] */
 				PIN_OUTPUT,
 				computeFactory(0, [&](){
-					return _outputs[0].state =
-					!(COMPUTE_REF(_inputs[0]) |
+					return !(COMPUTE_REF(_inputs[0]) |
 					COMPUTE_REF(_inputs[1]));
 				}),
 				nullptr
@@ -70,8 +69,7 @@ namespace nts {
 			{ /* P4 -> _outputs[1] */
 				PIN_OUTPUT,
 				computeFactory(1, [&](){
-					return _outputs[1].state =
-					!(COMPUTE_REF(_inputs[2]) |
+					return !(COMPUTE_REF(_inputs[2]) |
 					COMPUTE_REF(_inputs[3]));
 				}),
 				nullptr
@@ -104,8 +102,7 @@ namespace nts {
 			{ /* P10 -> _outputs[2] */
 				PIN_OUTPUT,
 				computeFactory(2, [&](){
-					return _outputs[2].state =
-					!(COMPUTE_REF(_inputs[4]) |
+					return !(COMPUTE_REF(_inputs[4]) |
 					COMPUTE_REF(_inputs[5]));
 				}),
 				nullptr
@@ -113,9 +110,8 @@ namespace nts {
 			{ /* P11 -> _outputs[3] */
 				PIN_OUTPUT,
 				computeFactory(3, [&](){
-					return _outputs[2].state =
-					!(_inputs[4].link->compute(_inputs[4].pin) |
-					_inputs[5].link->compute(_inputs[5].pin));
+					return !(COMPUTE_REF(_inputs[6]) |
+					COMPUTE_REF(_inputs[7]));
 				}),
 				nullptr
 			},

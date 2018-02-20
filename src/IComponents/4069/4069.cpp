@@ -24,54 +24,38 @@ _id{ value }
 	id++;
 }
 
-nts::Tristate nts::C4069::compute6()
-{
-	return _outputs[5].state =
-	(!_inputs[5].component->compute(_inputs[5].pin));
-}
-
-nts::Tristate nts::C4069::compute5()
-{
-	return _outputs[4].state =
-	(!_inputs[4].component->compute(_inputs[4].pin));
-}
-
-nts::Tristate nts::C4069::compute4()
-{
-	return _outputs[3].state =
-	(!_inputs[3].component->compute(_inputs[3].pin));
-}
-
-nts::Tristate nts::C4069::compute3()
-{
-	return _outputs[2].state =
-	(!_inputs[2].component->compute(_inputs[2].pin));
-}
-
-nts::Tristate nts::C4069::compute2()
-{
-	return _outputs[1].state =
-	(!_inputs[1].component->compute(_inputs[1].pin));
-}
-
-nts::Tristate nts::C4069::compute1()
-{
-	return _outputs[0].state =
-	(!_inputs[0].component->compute(_inputs[0].pin));
-}
-
 nts::Tristate nts::C4069::compute(std::size_t pin)
 {
-	if (_outputs[pin].cycle == cycle_g)
-		return _outputs[pin].state;
-	_outputs[pin].cycle++;
-	return (_outputs[pin].compute)();
+	if (pin > _nbPins) throw PinNExistError{ _id, pin };
+
+	return COMPUTE(_pinsRef[pin - 1]);
 }
 
 void nts::C4069::setLink(std::size_t pin, nts::IComponent &other, std::size_t otherPin)
 {
-	_inputs[pin].component = &other;
-	_inputs[pin].pin = otherPin;
+	if (pin > _nbPins) {
+		throw PinNExistError{ _id, pin };
+	}
+	if (_pinsRef[pin - 1].info == PIN_UNUSED) {
+		throw UnvalidLinkError{};
+	}
+	if (_pinsRef[pin - 1].info == PIN_INPUT) {
+		if (linker_g == PIN_UNUSED) {
+			linker_g = PIN_INPUT;
+			other.setLink(otherPin, *this, pin);
+		}
+		if (linker_g == PIN_INPUT) {
+			throw LinkError{ "Inputs" };
+		}
+		_pinsRef[pin - 1].link(other, otherPin);
+	} else { /* _pinsRef[pin - 1].info == PIN_OUTPUT */
+		if (linker_g == PIN_OUTPUT) {
+			throw LinkError{ "Outputs" };
+		}
+		linker_g = PIN_OUTPUT;
+		other.setLink(otherPin, *this, pin);
+	}
+	linker_g = PIN_UNUSED;
 }
 
 void nts::C4069::dump() const
