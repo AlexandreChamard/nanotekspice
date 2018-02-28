@@ -53,6 +53,7 @@ SRC		=	main.cpp				\
 			Components/4071/4071.cpp		\
 			Components/4081/4081.cpp		\
 			Components/4512/4512.cpp		\
+			Components/4017/4017.cpp		\
 			Components/False/False.cpp		\
 			Components/Clock/Clock.cpp		\
 			Components/Input/Input.cpp		\
