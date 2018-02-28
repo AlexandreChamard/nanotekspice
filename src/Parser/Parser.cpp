@@ -33,8 +33,12 @@ void nts::Parser::operator()(std::string const &filename)
 		};
 		line = file.getline();
 	}
-	if (nbC == 0) throw nts::NoChipSecError{};
-	if (nbL == 0) throw nts::NoLinkSecError{};
+	if (nbC == 0) {
+		throw nts::NoChipSecError{};
+	}
+	if (nbL == 0) {
+		throw nts::NoLinkSecError{};
+	}
 }
 
 bool nts::Parser::parsInfos(std::string &line)

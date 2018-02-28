@@ -1,0 +1,35 @@
+input : p1 p2 p3 p4 p5 p6 p7 p8 p18 p19 p20 p21 p22 p23
+output: p9 p10 p11 p13 p14 p15 p16 p17
+??    : p12 p24
+
+
+address  = 0 & A0 << 0 & A1 << 1 & ... & A10 << 10
+	 = 0 & p8 & p7 << 1 & p6 << 2 & p5 << 3 & p4 << 4 & p3 << 5 &
+	 p2 << 6 & p1 << 7 & p23 << 8 & p22 << 9 & p19 << 10
+
+read mode:
+if !p18 & !p20
+char = read to address in file
+p9   = char & 0b00000001
+p10  = char & 0b00000010
+p11  = char & 0b00000100
+p13  = char & 0b00001000
+p14  = char & 0b00010000
+p15  = char & 0b00100000
+p16  = char & 0b01000000
+p17  = char & 0b10000000
+
+standby mode:
+if p18 & !p21
+output = undefined
+
+deselecte mode:
+if p20 & !p21
+output = undefined
+
+program mode:
+if (p18 & P20 & p21)
+print char at address
+
+other mode:
+output = undefined

@@ -10,6 +10,8 @@
 #include <iostream>
 #include <unordered_map>
 #include <string>
+#include "Cutline.hpp"
+#include "Tools.hpp"
 
 namespace nts {
 	template<typename T>
@@ -33,6 +35,7 @@ namespace nts {
 		void execSimulate();
 		void execLoop();
 		void execDump();
+		bool setValue(std::string const &line);
 
 		using exec_t = void (nts::Shell<T>::*)();
 
@@ -62,13 +65,32 @@ void nts::Shell<T>::loop()
 	while (!std::cin.eof() && _exit == false) {
 		echoPrompt();
 		std::cin.getline(line, 256);
-		if (_builtins[line]) {
+		if (_builtins.find(line) != _builtins.end()) {
 			(this->*_builtins[line])();
 		} else if (*line && !std::cin.eof()) {
-			std::cout << "Unrecognized command \'" << line << "\'" << std::endl;
-			// std::cerr << line << ": command not found" << std::endl;
+			if (setValue(line) == false) {
+				std::cout << "Unrecognized command \'" <<
+						line << "\'" << std::endl;
+			}
 		}
 	}
+}
+
+template<typename T>
+bool nts::Shell<T>::setValue(std::string const &line)
+{
+	lib::Cutline<'=', '\0'> cutter;
+	std::string l = line;
+	auto vec = cutter(l);
+	if (vec[1] != "") {
+		try {
+			_t->setValue(vec[0], vec[1]);
+		} catch (std::exception &e) {
+			std::cout << e.what() << std::endl;
+		}
+		return true;
+	}
+	return false;
 }
 
 /*
