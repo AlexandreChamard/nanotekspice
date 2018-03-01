@@ -24,7 +24,7 @@ namespace nts {
 		static unsigned int id;
 
 		std::string _id;
-		std::size_t _count = -1;
+		std::size_t _count = 0;
 		std::size_t _cycle = 0;
 		std::array<Output, 12> _outputs;
 		std::array<Input, 2> _inputs;
