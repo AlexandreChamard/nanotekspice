@@ -42,11 +42,11 @@ namespace nts {
 			return [&, p, comp](){
 				if (_cycle != cycle_g) {
 					_cycle = cycle_g;
-					_sum = COMPUTE_REF(_inputs[0]) +
-					COMPUTE_REF(_inputs[1]) + COMPUTE_REF(_inputs[2]) +
-					(COMPUTE_REF(_inputs[3]) << 1) + (COMPUTE_REF(_inputs[4]) << 1) +
-					(COMPUTE_REF(_inputs[5]) << 2) + (COMPUTE_REF(_inputs[6]) << 2) +
-					(COMPUTE_REF(_inputs[7]) << 3) + (COMPUTE_REF(_inputs[8]) << 3);
+					_sum = COMPUTE_REF(_inputs[7]) +
+					COMPUTE_REF(_inputs[6]) + COMPUTE_REF(_inputs[5]) +
+					(COMPUTE_REF(_inputs[4]) << 1) + (COMPUTE_REF(_inputs[3]) << 1) +
+					(COMPUTE_REF(_inputs[2]) << 2) + (COMPUTE_REF(_inputs[1]) << 2) +
+					(COMPUTE_REF(_inputs[0]) << 3) + (COMPUTE_REF(_inputs[8]) << 3);
 				}
 				return _outputs[p].state = comp();
 			};

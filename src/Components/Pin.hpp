@@ -43,5 +43,5 @@ namespace nts {
 
 	#define COMPUTE_REF(i) ((i).link ? (i).link->compute((i).pin) : Tristate::UNDEFINED)
 	#define COMPUTE(i) ((i).compute ? (i).compute() : Tristate::UNDEFINED)
-	#define BIT(n, i) ((n & (1 << (i - 1))) >> (i - 1))
+	#define BIT(n, i) (((n) & (1 << (i - 1))) >> (i - 1))
 }

@@ -12,7 +12,8 @@
 
 unsigned int nts::Ctrue::id = 0;
 
-nts::Ctrue::Ctrue(std::string const &value)
+nts::Ctrue::Ctrue(std::string const &value):
+_id{ value }
 {
 	if (_id.size() == 0) {
 		std::stringstream sid;
