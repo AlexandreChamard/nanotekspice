@@ -45,6 +45,7 @@ SRC		=	main.cpp				\
 			Type/Bool.cpp				\
 			Components/ComponentFactory.cpp		\
 			Components/4001/4001.cpp		\
+			Components/4040/4040.cpp		\
 			Components/4008/4008.cpp		\
 			Components/4011/4011.cpp		\
 			Components/4013/4013.cpp		\

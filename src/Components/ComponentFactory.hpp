@@ -22,6 +22,7 @@
 #include "4013/4013.hpp"
 #include "4030/4030.hpp"
 #include "4069/4069.hpp"
+#include "4040/4040.hpp"
 #include "4071/4071.hpp"
 #include "4081/4081.hpp"
 #include "4017/4017.hpp"
@@ -77,6 +78,7 @@ namespace nts {
 			{"4013", creatorFactory<C4013>()},
 			{"4030", creatorFactory<C4030>()},
 			{"4069", creatorFactory<C4069>()},
+			{"4040", creatorFactory<C4040>()},
 			{"4071", creatorFactory<C4071>()},
 			{"4081", creatorFactory<C4081>()},
 			{"4017", creatorFactory<C4017>()},
