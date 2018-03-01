@@ -23,12 +23,12 @@ std::string lib::ParsFile::getline()
 	std::string str;
 
 	std::getline(_file, str);
-	if (str.size() > 0 && _flags | COMMENT) {
+	if (str.size() > 0 && (_flags | COMMENT)) {
 		Cutline<'#', '\0'> cutter;
 		auto vec = cutter(str);
 		str = vec[0];
 	}
-	if (str.size() == 0 && eof() == false && _flags | EMPTY) {
+	if (str.size() == 0 && eof() == false && (_flags | EMPTY)) {
 		return getline();
 	}
 	return str;

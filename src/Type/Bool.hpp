@@ -48,6 +48,8 @@ nts::Tristate operator!(nts::Tristate);
 nts::Tristate operator&(nts::Tristate, nts::Tristate);
 nts::Tristate operator|(nts::Tristate, nts::Tristate);
 nts::Tristate operator^(nts::Tristate, nts::Tristate);
+ssize_t operator+(ssize_t, nts::Tristate);
+ssize_t operator+(nts::Tristate, nts::Tristate);
 
 std::ostream &operator<<(std::ostream &, nts::Tristate);
 std::ostream &operator<<(std::ostream &, nts::Bool const &);
