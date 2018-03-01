@@ -24,10 +24,10 @@ namespace nts {
 		static unsigned int id;
 
 		std::string _id;
-		std::size_t _count = 0;
+		std::size_t _count = -1;
 		std::size_t _cycle = 0;
-		std::array<Output, 11> _outputs;
-		std::array<Input, 3> _inputs;
+		std::array<Output, 12> _outputs;
+		std::array<Input, 2> _inputs;
 
 		linkPin_t linkerFactory(std::size_t p)
 		{

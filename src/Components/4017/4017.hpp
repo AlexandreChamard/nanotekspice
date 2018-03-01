@@ -57,49 +57,49 @@ namespace nts {
 			{ /* P1 -> _outputs[0] Q5 */
 				PIN_OUTPUT,
 				computeFactory(0, [&](){
-					return Tristate(_count % 10 == 5);
+					return Tristate(_count % 11 == 6);
 				}),
 				nullptr
 			},
 			{ /* P2 -> _outputs[1] Q1 */
 				PIN_OUTPUT,
 				computeFactory(1, [&](){
-					return Tristate(_count % 10 == 1);
+					return Tristate(_count % 11 == 2);
 				}),
 				nullptr
 			},
 			{ /* P3 -> _outputs[2] Q0 */
 				PIN_OUTPUT,
 				computeFactory(2, [&](){
-					return Tristate(_count % 10 == 0);
+					return Tristate(_count % 11 == 1);
 				}),
 				nullptr
 			},
 			{ /* P4 -> _outputs[3] Q2 */
 				PIN_OUTPUT,
 				computeFactory(3, [&](){
-					return Tristate(_count % 10 == 2);
+					return Tristate(_count % 11 == 3);
 				}),
 				nullptr
 			},
 			{ /* P5 -> _outputs[4] Q6 */
 				PIN_OUTPUT,
 				computeFactory(4, [&](){
-					return Tristate(_count % 10 == 6);
+					return Tristate(_count % 11 == 7);
 				}),
 				nullptr
 			},
 			{ /* P6 -> _outputs[5] Q7 */
 				PIN_OUTPUT,
 				computeFactory(5, [&](){
-					return Tristate(_count % 10 == 7);
+					return Tristate(_count % 11 == 8);
 				}),
 				nullptr
 			},
 			{ /* P7 -> _outputs[6] Q3 */
 				PIN_OUTPUT,
 				computeFactory(6, [&](){
-					return Tristate(_count % 10 == 3);
+					return Tristate(_count % 11 == 4);
 				}),
 				nullptr
 			},
@@ -111,21 +111,21 @@ namespace nts {
 			{ /* P9 -> _outputs[7] Q8 */
 				PIN_OUTPUT,
 				computeFactory(7, [&](){
-					return Tristate(_count % 10 == 8);
+					return Tristate(_count % 11 == 9);
 				}),
 				nullptr
 			},
 			{ /* P10 -> _outputs[8] Q4 */
 				PIN_OUTPUT,
 				computeFactory(8, [&](){
-					return Tristate(_count % 10 == 4);
+					return Tristate(_count % 11 == 5);
 				}),
 				nullptr
 			},
 			{ /* P11 -> _outputs[9] Q9 */
 				PIN_OUTPUT,
 				computeFactory(9, [&](){
-					return Tristate(_count % 10 == 9);
+					return Tristate(_count % 11 == 10);
 				}),
 				nullptr
 			},
