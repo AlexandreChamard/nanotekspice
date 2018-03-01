@@ -135,7 +135,7 @@ ssize_t operator+(ssize_t t1, nts::Tristate t2)
 	if (t1 == -1 || t2 == nts::Tristate::UNDEFINED) {
 		return -1;
 	}
-	return t1 + t2;
+	return t1 + std::size_t(t2);
 }
 
 ssize_t operator+(nts::Tristate t1, nts::Tristate t2)
@@ -143,7 +143,7 @@ ssize_t operator+(nts::Tristate t1, nts::Tristate t2)
 	if (t1 == nts::Tristate::UNDEFINED || t2 == nts::Tristate::UNDEFINED) {
 		return -1;
 	}
-	return t1 + t2;
+	return std::size_t(t1) + std::size_t(t2);
 }
 
 

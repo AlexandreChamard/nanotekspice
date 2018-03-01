@@ -28,6 +28,7 @@
 #include "4017/4017.hpp"
 #include "4512/4512.hpp"
 #include "4514/4514.hpp"
+#include "4008/4008.hpp"
 
 namespace nts {
 	using component_t = std::unique_ptr<IComponent>;
@@ -81,6 +82,7 @@ namespace nts {
 			{"4040", creatorFactory<C4040>()},
 			{"4071", creatorFactory<C4071>()},
 			{"4081", creatorFactory<C4081>()},
+			{"4008", creatorFactory<C4008>()},
 			{"4017", creatorFactory<C4017>()},
 			{"4512", creatorFactory<C4512>()},
 			{"4514", creatorFactory<C4514>()},
