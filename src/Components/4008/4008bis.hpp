@@ -12,7 +12,7 @@
 #include "ComponentFactory.hpp"
 
 namespace nts {
-	class C4008 : public IComponent {
+	class C4008 : public IComponent, public ComponentFactory {
 	public:
 		C4008(std::string const &value = "");
 		~C4008() override = default;
@@ -25,8 +25,6 @@ namespace nts {
 		static unsigned int id;
 
 		std::string _id;
-		ssize_t _sum = -1;
-		std::size_t _cycle = 0;
 		std::array<Output, 5> _outputs;
 		std::array<Input, 9> _inputs;
 
@@ -41,16 +39,10 @@ namespace nts {
 		computePin_t computeFactory(std::size_t p, computePin_t comp)
 		{
 			return [&, p, comp](){
-				if (_cycle != cycle_g) {
-					_cycle = cycle_g;
-					for (std::size_t i = 0; i < 9; i++) {
-						_sum = COMPUTE_REF(_inputs[0]) +
-						COMPUTE_REF(_inputs[1]) + COMPUTE_REF(_inputs[2]) +
-						(COMPUTE_REF(_inputs[3]) << 1) + (COMPUTE_REF(_inputs[4]) << 1) +
-						(COMPUTE_REF(_inputs[5]) << 2) + (COMPUTE_REF(_inputs[6]) << 2) +
-						(COMPUTE_REF(_inputs[7]) << 3) + (COMPUTE_REF(_inputs[8]) << 3);
-					}
+				if (_outputs[p].cycle == cycle_g) {
+					return _outputs[p].state;
 				}
+				_outputs[p].cycle = cycle_g;
 				return _outputs[p].state = comp();
 			};
 		}
@@ -105,35 +97,35 @@ namespace nts {
 			{ /* P10 -> _outputs[0] S1 */
 				PIN_OUTPUT,
 				computeFactory(0, [&](){
-					return Tristate(_sum != -1 ? BIT(_sum, 1) : -1);
+					return (*ComponentFactory::_outputs["S1"]).compute(1);
 				}),
 				nullptr
 			},
 			{ /* P11 -> _outputs[1] S2 */
 				PIN_OUTPUT,
 				computeFactory(1, [&](){
-					return Tristate(_sum != -1 ? BIT(_sum, 2) : -1);
+					return (*ComponentFactory::_outputs["S2"]).compute(1);
 				}),
 				nullptr
 			},
 			{ /* P12 -> _outputs[2] S3 */
 				PIN_OUTPUT,
 				computeFactory(2, [&](){
-					return Tristate(_sum != -1 ? BIT(_sum, 3) : -1);
+					return (*ComponentFactory::_outputs["S3"]).compute(1);
 				}),
 				nullptr
 			},
 			{ /* P13 -> _outputs[3] S4 */
 				PIN_OUTPUT,
 				computeFactory(3, [&](){
-					return Tristate(_sum != -1 ? BIT(_sum, 4) : -1);
+					return (*ComponentFactory::_outputs["S4"]).compute(1);
 				}),
 				nullptr
 			},
 			{ /* P14 -> _outputs[4] CO */
 				PIN_OUTPUT,
 				computeFactory(4, [&](){
-					return Tristate(_sum != -1 ? BIT(_sum, 5) : -1);
+					return (*ComponentFactory::_outputs["CO"]).compute(1);
 				}),
 				nullptr
 			},
