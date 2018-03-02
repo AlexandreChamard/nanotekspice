@@ -11,7 +11,7 @@
 #include "ParsFile.hpp"
 
 lib::ParsFile::ParsFile(std::string const &filename, int flags):
-_file { filename }, _flags{ flags }
+_filename{filename}, _file { filename }, _flags{ flags }
 {
 	if (isOpen() == false) {
 		throw FileError{ "File not found" };
@@ -22,6 +22,13 @@ std::string lib::ParsFile::getline()
 {
 	std::string str;
 
+	if (_eof == true) {
+		throw EofError{ _filename };
+	}
+	if (_file.eof()) {
+		_eof = true;
+		return "";
+	}
 	std::getline(_file, str);
 	if (str.size() > 0 && (_flags | COMMENT)) {
 		Cutline<'#', '\0'> cutter;
@@ -41,7 +48,7 @@ bool lib::ParsFile::isOpen() const
 
 bool lib::ParsFile::eof() const
 {
-	return _file.eof();
+	return _eof;
 }
 
 bool fileExist(std::string const &pathName)

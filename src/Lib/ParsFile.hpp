@@ -31,8 +31,10 @@ namespace lib {
 		bool eof() const;
 
 	private:
+		std::string _filename;
 		std::ifstream _file;
 		int _flags;
+		bool _eof = false;
 	};
 
 	class FileError : public std::exception {
@@ -45,6 +47,21 @@ namespace lib {
 		}
 
 		virtual ~FileError() throw() {}
+
+	private:
+		std::string _msg;
+	};
+
+	class EofError : public std::exception {
+	public:
+		EofError(std::string const &msg = "") throw() :
+		_msg(msg + ": has reach eof") {}
+
+		char const *what() const throw() override {
+			return (_msg.c_str());
+		}
+
+		virtual ~EofError() throw() {}
 
 	private:
 		std::string _msg;
