@@ -24,7 +24,7 @@ namespace nts {
 		static unsigned int id;
 
 		std::string _id;
-		std::size_t _count = 0;
+		std::size_t _count = -1;
 		std::size_t _cycle = 0;
 		std::array<Output, 11> _outputs;
 		std::array<Input, 3> _inputs;
@@ -42,10 +42,10 @@ namespace nts {
 			return [&, p, comp](){
 				if (_cycle != cycle_g) {
 					_cycle = cycle_g;
-					if (!COMPUTE_REF(_inputs[0]) &&
-					COMPUTE_REF(_inputs[1]) == true)
+					if ((COMPUTE_REF(_inputs[0]) == FALSE &&
+					COMPUTE_REF(_inputs[1]) == TRUE) || _count == (unsigned long)-1)
 						_count++;
-					if (COMPUTE_REF(_inputs[2]) == true)
+					if (COMPUTE_REF(_inputs[2]) == TRUE)
 						_count = 0;
 				}
 				return _outputs[p].state = comp();
