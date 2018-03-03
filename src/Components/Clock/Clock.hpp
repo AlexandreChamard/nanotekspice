@@ -26,9 +26,6 @@ namespace nts {
 		computePin_t computeFactory(std::size_t p, computePin_t comp)
 		{
 			return [&, p, comp](){
-				if (_outputs[p].cycle == cycle_g) {
-					return _outputs[p].state;
-				}
 				_outputs[p].cycle = cycle_g;
 				return comp();
 			};
@@ -39,7 +36,7 @@ namespace nts {
 			{ /* p1 -> _outputs[0] */
 				PIN_OUTPUT,
 				computeFactory(0, [&](){
-					return Tristate((_outputs[0].state + (cycle_g % 2)) % 2);
+					return Tristate((_outputs[0].state + ((cycle_g + 1) % 2)) % 2);
 				}),
 				nullptr
 			}
