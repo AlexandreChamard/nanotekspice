@@ -23,6 +23,8 @@ namespace nts {
 	private:
 		static unsigned int id;
 
+		ssize_t _state = -1;
+		std::size_t _cycle = 0;
 		std::string _id;
 		std::array<Output, 16> _outputs;
 		std::array<Input, 6> _inputs;
@@ -41,11 +43,22 @@ namespace nts {
 				if (COMPUTE_REF(_inputs[5]) == TRUE) {
 					return FALSE;
 				}
-				if (_outputs[p].cycle == cycle_g) {
-					return _outputs[p].state;
+				for (auto &pin : _inputs) {
+					if (COMPUTE_REF(pin) == UNDEFINED) {
+						return UNDEFINED;
+					}
 				}
-				_outputs[p].cycle = cycle_g;
-				return _outputs[p].state = comp();
+				if (_cycle != cycle_g && COMPUTE_REF(_inputs[0]) == TRUE) {
+					_cycle = cycle_g;
+					_state = (ssize_t)COMPUTE_REF(_inputs[1]) +
+					(COMPUTE_REF(_inputs[2]) << 1) +
+					(COMPUTE_REF(_inputs[3]) << 2) +
+					COMPUTE_REF(_inputs[4]) << 3;
+				}
+				if (_state == -1) {
+					return UNDEFINED;
+				}
+				return comp();
 			};
 		}
 
@@ -56,125 +69,69 @@ namespace nts {
 				[&]() {return COMPUTE_REF(_inputs[0]);},
 				linkerFactory(0)
 			},
-			{ /* P2 -> _inputs[1] */
+			{ /* P2 -> _inputs[2] */
 				PIN_INPUT,
-				[&]() {return COMPUTE_REF(_inputs[1]);},
+				[&]() {return COMPUTE_REF(_inputs[2]);},
 				linkerFactory(1)
 			},
 			{ /* P3 -> _inputs[2] */
 				PIN_INPUT,
-				[&]() {return COMPUTE_REF(_inputs[2]);},
+				[&]() {return COMPUTE_REF(_inputs[3]);},
 				linkerFactory(2)
 			},
 			{ /* P4 -> _outputs[0] */
 				PIN_OUTPUT,
 				computeFactory(0, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[0].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((COMPUTE_REF(_inputs[0])) &
-						(COMPUTE_REF(_inputs[1])) &
-						(COMPUTE_REF(_inputs[2])) &
-						(!COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 7);
 				}),
 				nullptr
 			},
 			{ /* P5 -> _outputs[1] */
 				PIN_OUTPUT,
 				computeFactory(1, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[1].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((!COMPUTE_REF(_inputs[0])) &
-						(COMPUTE_REF(_inputs[1])) &
-						(COMPUTE_REF(_inputs[2])) &
-						(!COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 6);
 				}),
 				nullptr
 			},
 			{ /* P6 -> _outputs[2] */
 				PIN_OUTPUT,
 				computeFactory(2, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[2].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((COMPUTE_REF(_inputs[0])) &
-						(!COMPUTE_REF(_inputs[1])) &
-						(COMPUTE_REF(_inputs[2])) &
-						(!COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 5);
 				}),
 				nullptr
 			},
 			{ /* P7 -> _outputs[3] */
 				PIN_OUTPUT,
 				computeFactory(3, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[3].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((!COMPUTE_REF(_inputs[0])) &
-						(COMPUTE_REF(_inputs[1])) &
-						(!COMPUTE_REF(_inputs[2])) &
-						(!COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 4);
 				}),
 				nullptr
 			},
 			{ /* P8 -> _outputs[4] */
 				PIN_OUTPUT,
 				computeFactory(4, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[4].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((COMPUTE_REF(_inputs[0])) &
-						(COMPUTE_REF(_inputs[1])) &
-						(!COMPUTE_REF(_inputs[2])) &
-						(!COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 3);
 				}),
 				nullptr
 			},
 			{ /* P9 -> _outputs[5] */
 				PIN_OUTPUT,
 				computeFactory(5, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[5].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((COMPUTE_REF(_inputs[0])) &
-						(!COMPUTE_REF(_inputs[1])) &
-						(!COMPUTE_REF(_inputs[2])) &
-						(!COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 1);
 				}),
 				nullptr
 			},
 			{ /* P10 -> _outputs[6] */
 				PIN_OUTPUT,
 				computeFactory(6, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[6].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((!COMPUTE_REF(_inputs[0])) &
-						(COMPUTE_REF(_inputs[1])) &
-						(!COMPUTE_REF(_inputs[2])) &
-						(!COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 2);
 				}),
 				nullptr
 			},
 			{ /* P11 -> _outputs[7] */
 				PIN_OUTPUT,
 				computeFactory(7, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[7].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((!COMPUTE_REF(_inputs[0])) &
-						(!COMPUTE_REF(_inputs[1])) &
-						(!COMPUTE_REF(_inputs[2])) &
-						(!COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 0);
 				}),
 				nullptr
 			},
@@ -186,123 +143,67 @@ namespace nts {
 			{ /* P13 -> _outputs[8] */
 				PIN_OUTPUT,
 				computeFactory(8, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[8].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((COMPUTE_REF(_inputs[0])) &
-						(!COMPUTE_REF(_inputs[1])) &
-						(COMPUTE_REF(_inputs[2])) &
-						(COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 13);
 				}),
 				nullptr
 			},
 			{ /* P14 -> _outputs[9] */
 				PIN_OUTPUT,
 				computeFactory(9, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[9].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((!COMPUTE_REF(_inputs[0])) &
-						(!COMPUTE_REF(_inputs[1])) &
-						(COMPUTE_REF(_inputs[2])) &
-						(COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 12);
 				}),
 				nullptr
 			},
 			{ /* P15 -> _outputs[10] */
 				PIN_OUTPUT,
 				computeFactory(10, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[10].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((COMPUTE_REF(_inputs[0])) &
-						(COMPUTE_REF(_inputs[1])) &
-						(COMPUTE_REF(_inputs[2])) &
-						(COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 15);
 				}),
 				nullptr
 			},
 			{ /* P16 -> _outputs[11] */
 				PIN_OUTPUT,
 				computeFactory(11, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[11].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((!COMPUTE_REF(_inputs[0])) &
-						(COMPUTE_REF(_inputs[1])) &
-						(COMPUTE_REF(_inputs[2])) &
-						(COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 14);
 				}),
 				nullptr
 			},
 			{ /* P17 -> _outputs[12] */
 				PIN_OUTPUT,
 				computeFactory(12, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[12].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((COMPUTE_REF(_inputs[0])) &
-						(!COMPUTE_REF(_inputs[1])) &
-						(!COMPUTE_REF(_inputs[2])) &
-						(COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 9);
 				}),
 				nullptr
 			},
 			{ /* P18 -> _outputs[13] */
 				PIN_OUTPUT,
 				computeFactory(13, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[13].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((!COMPUTE_REF(_inputs[0])) &
-						(!COMPUTE_REF(_inputs[1])) &
-						(!COMPUTE_REF(_inputs[2])) &
-						(COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 8);
 				}),
 				nullptr
 			},
 			{ /* P19 -> _outputs[14] */
 				PIN_OUTPUT,
 				computeFactory(14, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[14].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						((COMPUTE_REF(_inputs[0])) &
-						(COMPUTE_REF(_inputs[1])) &
-						(!COMPUTE_REF(_inputs[2])) &
-						(COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 11);
 				}),
 				nullptr
 			},
 			{ /* P20 -> _outputs[15] */
 				PIN_OUTPUT,
 				computeFactory(15, [&](){
-					if (COMPUTE_REF(_inputs[0]) == FALSE) {
-						return _outputs[15].state;
-					}
-					return	(!COMPUTE_REF(_inputs[4])) &
-						(COMPUTE_REF(_inputs[0]) &
-						(COMPUTE_REF(_inputs[1])) &
-						(COMPUTE_REF(_inputs[2])) &
-						(COMPUTE_REF(_inputs[3])));
+					return Tristate(_state == 10);
 				}),
 				nullptr
 			},
-			{ /* P21 -> _inputs[3] */
-				PIN_INPUT,
-				[&]() {return COMPUTE_REF(_inputs[3]);},
-				linkerFactory(3)
-			},
-			{ /* P22 -> _inputs[4] */
+			{ /* P21 -> _inputs[4] */
 				PIN_INPUT,
 				[&]() {return COMPUTE_REF(_inputs[4]);},
+				linkerFactory(3)
+			},
+			{ /* P22 -> _inputs[5] */
+				PIN_INPUT,
+				[&]() {return COMPUTE_REF(_inputs[5]);},
 				linkerFactory(4)
 			},
 			{ /* P23 -> _inputs[5] */
