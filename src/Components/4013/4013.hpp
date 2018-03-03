@@ -43,9 +43,9 @@ namespace nts {
 					return _outputs[p].state;
 				}
 				_outputs[p].cycle = cycle_g;
-				if (!COMPUTE_REF(_inputs[0]) &&
-				!COMPUTE_REF(_inputs[1]) &&
-				!COMPUTE_REF(_inputs[3])) {
+				if (COMPUTE_REF(_inputs[0]) &&
+				(!COMPUTE_REF(_inputs[1])) &&
+				(!COMPUTE_REF(_inputs[3]))) {
 					return _outputs[p].state;
 				}
 				return _outputs[p].state = comp();
