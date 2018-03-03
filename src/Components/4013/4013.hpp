@@ -57,7 +57,8 @@ namespace nts {
 					(!COMPUTE_REF(_inputs[1])) &
 					(!COMPUTE_REF(_inputs[3]))) == TRUE &&
 					COMPUTE_REF(_inputs[0]) != _lastStates[0]) ||
-					_lastStates[0] == UNDEFINED) {
+					(_lastStates[0] == UNDEFINED && ((!COMPUTE_REF(_inputs[1])) &
+					(!COMPUTE_REF(_inputs[3]))))) {
 						_lastStates[0] = COMPUTE_REF(_inputs[0]);
 						return _outputs[0].state;
 					}
@@ -75,7 +76,8 @@ namespace nts {
 					(!COMPUTE_REF(_inputs[1])) &
 					(!COMPUTE_REF(_inputs[3]))) == TRUE &&
 					COMPUTE_REF(_inputs[0]) != _lastStates[1]) ||
-					_lastStates[1] == UNDEFINED) {
+					(_lastStates[1] == UNDEFINED && ((!COMPUTE_REF(_inputs[1])) &
+					(!COMPUTE_REF(_inputs[3]))))) {
 						_lastStates[1] = COMPUTE_REF(_inputs[0]);
 						return _outputs[0].state;
 					}
@@ -138,7 +140,8 @@ namespace nts {
 					(!COMPUTE_REF(_inputs[4])) &
 					(!COMPUTE_REF(_inputs[6]))) == TRUE &&
 					COMPUTE_REF(_inputs[0]) != _lastStates[2]) ||
-					_lastStates[2] == UNDEFINED) {
+					(_lastStates[2] == UNDEFINED && ((!COMPUTE_REF(_inputs[4])) &
+					(!COMPUTE_REF(_inputs[6]))))) {
 						_lastStates[2] = COMPUTE_REF(_inputs[7]);
 						return _outputs[2].state;
 					}
@@ -156,7 +159,8 @@ namespace nts {
 					(!COMPUTE_REF(_inputs[4])) &
 					(!COMPUTE_REF(_inputs[6]))) == TRUE &&
 					COMPUTE_REF(_inputs[0]) != _lastStates[3]) ||
-					_lastStates[3] == UNDEFINED) {
+					(_lastStates[3] == UNDEFINED && ((!COMPUTE_REF(_inputs[4])) &
+					(!COMPUTE_REF(_inputs[6]))))) {
 						_lastStates[3] = COMPUTE_REF(_inputs[7]);
 						return _outputs[2].state;
 					}
