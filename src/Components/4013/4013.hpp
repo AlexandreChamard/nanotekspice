@@ -79,7 +79,7 @@ namespace nts {
 					(_lastStates[1] == UNDEFINED && ((!COMPUTE_REF(_inputs[1])) &
 					(!COMPUTE_REF(_inputs[3]))))) {
 						_lastStates[1] = COMPUTE_REF(_inputs[0]);
-						return _outputs[0].state;
+						return _outputs[1].state;
 					}
 				_lastStates[1] = COMPUTE_REF(_inputs[0]);
 				return (COMPUTE_REF(_inputs[1]) |
@@ -162,7 +162,7 @@ namespace nts {
 					(_lastStates[3] == UNDEFINED && ((!COMPUTE_REF(_inputs[4])) &
 					(!COMPUTE_REF(_inputs[6]))))) {
 						_lastStates[3] = COMPUTE_REF(_inputs[7]);
-						return _outputs[2].state;
+						return _outputs[3].state;
 					}
 				_lastStates[3] = COMPUTE_REF(_inputs[7]);
 				return (COMPUTE_REF(_inputs[4]) |
