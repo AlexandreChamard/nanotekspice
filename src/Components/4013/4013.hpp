@@ -72,8 +72,8 @@ namespace nts {
 						return _outputs[1].state;
 					}
 				return (COMPUTE_REF(_inputs[1]) |
-				((!COMPUTE_REF(_inputs[3])) &
-				(!COMPUTE_REF(_inputs[4]))));
+				((!COMPUTE_REF(_inputs[2])) &
+				(!COMPUTE_REF(_inputs[3]))));
 				}),
 				nullptr
 			},
