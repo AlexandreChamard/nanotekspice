@@ -26,7 +26,9 @@ namespace nts {
 		computePin_t computeFactory(std::size_t p, computePin_t comp)
 		{
 			return [&, p, comp](){
-				_outputs[p].cycle = cycle_g;
+				if (_outputs[0].state == UNDEFINED) {
+					return UNDEFINED;
+				}
 				return comp();
 			};
 		}

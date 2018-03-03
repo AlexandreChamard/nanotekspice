@@ -24,7 +24,7 @@ namespace nts {
 		static unsigned int id;
 
 		std::string _id;
-		std::size_t _count = 0;
+		std::size_t _count = -1;
 		std::size_t _cycle = 0;
 		std::array<Output, 12> _outputs;
 		std::array<Input, 2> _inputs;
@@ -40,9 +40,13 @@ namespace nts {
 		computePin_t computeFactory(std::size_t p, computePin_t comp)
 		{
 			return [&, p, comp](){
+				if (COMPUTE_REF(_inputs[0]) == UNDEFINED ||
+				COMPUTE_REF(_inputs[1]) == UNDEFINED) {
+					return UNDEFINED;
+				}
 				if (_cycle != cycle_g) {
 					_cycle = cycle_g;
-					if (!COMPUTE_REF(_inputs[0]))
+					if (!COMPUTE_REF(_inputs[0]) || _count == (unsigned long)-1)
 						_count++;
 					if (COMPUTE_REF(_inputs[1]) == true)
 						_count = 0;
