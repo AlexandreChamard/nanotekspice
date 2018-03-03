@@ -21,6 +21,12 @@ nts::input_t nts::ComponentFactory::createInput(std::string const &value)
 	return std::unique_ptr<Cinput>(new Cinput(value));
 }
 
+nts::input_t nts::ComponentFactory::createClock(std::string const &value)
+{
+	return std::unique_ptr<Cinput>(new Cclock(value));
+}
+
+
 nts::component_t nts::ComponentFactory::createComponent(std::string const &type, std::string const &value)
 {
 	return _map[type](value);
@@ -31,8 +37,10 @@ void nts::ComponentFactory::componentFactory(std::string const &type, std::strin
 	if (_map.find(type) == _map.end()) {
 		throw nts::ComponentNExistError{ type };
 	}
-	if (type == "input" || type == "clock") {
+	if (type == "input") {
 		_inputs.insert(std::make_pair(value, createInput(value)));
+	} else if (type == "clock") {
+		_inputs.insert(std::make_pair(value, createClock(value)));
 	} else if (type == "output") {
 		_outputs.insert(std::make_pair(value, createOutput(value)));
 	} else {

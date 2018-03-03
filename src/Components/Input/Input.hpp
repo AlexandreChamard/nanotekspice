@@ -15,8 +15,7 @@ namespace nts {
 		Cinput(std::string const &value = "");
 		~Cinput() override = default;
 		Tristate compute(std::size_t pin) override;
-		void setLink(std::size_t pin, IComponent &other,
-			std::size_t otherPin) override;
+		void setLink(std::size_t pin, IComponent &other, std::size_t otherPin) override;
 		void dump() const override;
 		void setState(Tristate state);
 		void setState(bool state);

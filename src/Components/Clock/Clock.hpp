@@ -15,7 +15,7 @@ namespace nts {
 	public:
 		Cclock(std::string const &value = "");
 		~Cclock() override = default;
-		Tristate compute(std::size_t pin) override;
+		Tristate compute(std::size_t pin) final;
 		void setLink(std::size_t pin, IComponent &other,
 			std::size_t otherPin) override;
 		void dump() const override;
@@ -36,7 +36,7 @@ namespace nts {
 			{ /* p1 -> _outputs[0] */
 				PIN_OUTPUT,
 				computeFactory(0, [&](){
-					return Tristate((_outputs[0].state + ((cycle_g + 1) % 2)) % 2);
+					return Tristate((_outputs[0].state + cycle_g) % 2);
 				}),
 				nullptr
 			}

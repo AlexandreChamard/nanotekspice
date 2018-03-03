@@ -52,6 +52,7 @@ namespace nts {
 	private:
 		component_t createComponent(std::string const &type, std::string const &value);
 		input_t createInput(std::string const &value);
+		input_t createClock(std::string const &value);
 		output_t createOutput(std::string const &value);
 
 	protected:
