@@ -42,8 +42,7 @@ namespace nts {
 			return [&, p, comp](){
 				if (_cycle != cycle_g) {
 					_cycle = cycle_g;
-					if (!COMPUTE_REF(_inputs[0]))
-						_count++;
+					_count++;
 					if (COMPUTE_REF(_inputs[1]) == true)
 						_count = 0;
 				}
