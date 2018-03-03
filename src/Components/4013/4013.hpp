@@ -43,6 +43,11 @@ namespace nts {
 					return _outputs[p].state;
 				}
 				_outputs[p].cycle = cycle_g;
+				if (!COMPUTE_REF(_inputs[0]) &&
+				!COMPUTE_REF(_inputs[1]) &&
+				!COMPUTE_REF(_inputs[3])) {
+					return _outputs[p].state;
+				}
 				return _outputs[p].state = comp();
 			};
 		}
@@ -52,9 +57,6 @@ namespace nts {
 			{ /* P1 -> _outputs[0] */
 				PIN_OUTPUT,
 				computeFactory(0, [&](){
-				if ((!COMPUTE_REF(_inputs[3])) &
-					(!COMPUTE_REF(_inputs[1])))
-					return _outputs[0].state;
 				return ((COMPUTE_REF(_inputs[3])) |
 				((COMPUTE_REF(_inputs[0])) &
 				(COMPUTE_REF(_inputs[2])) &
@@ -65,9 +67,6 @@ namespace nts {
 			{ /* P2 -> _outputs[1] */
 				PIN_OUTPUT,
 				computeFactory(1, [&](){
-				if ((!COMPUTE_REF(_inputs[3])) &
-					(!COMPUTE_REF(_inputs[1])))
-					return _outputs[1].state;
 				return ((COMPUTE_REF(_inputs[1])) |
 				((COMPUTE_REF(_inputs[0])) &
 				(!COMPUTE_REF(_inputs[2])) &
@@ -123,9 +122,6 @@ namespace nts {
 			{ /* P12 -> _outputs[2] */
 				PIN_OUTPUT,
 				computeFactory(2, [&](){
-				if ((!COMPUTE_REF(_inputs[6])) &
-					(!COMPUTE_REF(_inputs[4])))
-					return _outputs[2].state;
 				return ((COMPUTE_REF(_inputs[6])) |
 				((COMPUTE_REF(_inputs[7])) &
 				(COMPUTE_REF(_inputs[5])) &
@@ -136,9 +132,6 @@ namespace nts {
 			{ /* P13 -> _outputs[3] */
 				PIN_OUTPUT,
 				computeFactory(3, [&](){
-				if ((!COMPUTE_REF(_inputs[6])) &
-					(!COMPUTE_REF(_inputs[4])))
-					return _outputs[3].state;
 				return ((COMPUTE_REF(_inputs[4])) |
 				((COMPUTE_REF(_inputs[7])) &
 				(!COMPUTE_REF(_inputs[5])) &
