@@ -51,9 +51,9 @@ namespace nts {
 				if (_cycle != cycle_g && COMPUTE_REF(_inputs[0]) == TRUE) {
 					_cycle = cycle_g;
 					_state = (ssize_t)COMPUTE_REF(_inputs[1]) +
-					(COMPUTE_REF(_inputs[2]) << 1) +
-					(COMPUTE_REF(_inputs[3]) << 2) +
-					COMPUTE_REF(_inputs[4]) << 3;
+					((COMPUTE_REF(_inputs[2]) << 1)) +
+					((COMPUTE_REF(_inputs[3]) << 2)) +
+					((COMPUTE_REF(_inputs[4]) << 3));
 				}
 				if (_state == -1) {
 					return UNDEFINED;
@@ -79,56 +79,56 @@ namespace nts {
 				[&]() {return COMPUTE_REF(_inputs[3]);},
 				linkerFactory(2)
 			},
-			{ /* P4 -> _outputs[0] */
+			{ /* P4 -> _outputs[0] S7 */
 				PIN_OUTPUT,
 				computeFactory(0, [&](){
 					return Tristate(_state == 7);
 				}),
 				nullptr
 			},
-			{ /* P5 -> _outputs[1] */
+			{ /* P5 -> _outputs[1] S6 */
 				PIN_OUTPUT,
 				computeFactory(1, [&](){
 					return Tristate(_state == 6);
 				}),
 				nullptr
 			},
-			{ /* P6 -> _outputs[2] */
+			{ /* P6 -> _outputs[2] S5 */
 				PIN_OUTPUT,
 				computeFactory(2, [&](){
 					return Tristate(_state == 5);
 				}),
 				nullptr
 			},
-			{ /* P7 -> _outputs[3] */
+			{ /* P7 -> _outputs[3] S4 */
 				PIN_OUTPUT,
 				computeFactory(3, [&](){
 					return Tristate(_state == 4);
 				}),
 				nullptr
 			},
-			{ /* P8 -> _outputs[4] */
+			{ /* P8 -> _outputs[4] S3 */
 				PIN_OUTPUT,
 				computeFactory(4, [&](){
 					return Tristate(_state == 3);
 				}),
 				nullptr
 			},
-			{ /* P9 -> _outputs[5] */
+			{ /* P9 -> _outputs[5] S1 */
 				PIN_OUTPUT,
 				computeFactory(5, [&](){
 					return Tristate(_state == 1);
 				}),
 				nullptr
 			},
-			{ /* P10 -> _outputs[6] */
+			{ /* P10 -> _outputs[6] S2 */
 				PIN_OUTPUT,
 				computeFactory(6, [&](){
 					return Tristate(_state == 2);
 				}),
 				nullptr
 			},
-			{ /* P11 -> _outputs[7] */
+			{ /* P11 -> _outputs[7] S0 */
 				PIN_OUTPUT,
 				computeFactory(7, [&](){
 					return Tristate(_state == 0);
@@ -140,56 +140,56 @@ namespace nts {
 				nullptr,
 				nullptr
 			},
-			{ /* P13 -> _outputs[8] */
+			{ /* P13 -> _outputs[8] S13 */
 				PIN_OUTPUT,
 				computeFactory(8, [&](){
 					return Tristate(_state == 13);
 				}),
 				nullptr
 			},
-			{ /* P14 -> _outputs[9] */
+			{ /* P14 -> _outputs[9] S12 */
 				PIN_OUTPUT,
 				computeFactory(9, [&](){
 					return Tristate(_state == 12);
 				}),
 				nullptr
 			},
-			{ /* P15 -> _outputs[10] */
+			{ /* P15 -> _outputs[10] S15 */
 				PIN_OUTPUT,
 				computeFactory(10, [&](){
 					return Tristate(_state == 15);
 				}),
 				nullptr
 			},
-			{ /* P16 -> _outputs[11] */
+			{ /* P16 -> _outputs[11] S14 */
 				PIN_OUTPUT,
 				computeFactory(11, [&](){
 					return Tristate(_state == 14);
 				}),
 				nullptr
 			},
-			{ /* P17 -> _outputs[12] */
+			{ /* P17 -> _outputs[12] S9 */
 				PIN_OUTPUT,
 				computeFactory(12, [&](){
 					return Tristate(_state == 9);
 				}),
 				nullptr
 			},
-			{ /* P18 -> _outputs[13] */
+			{ /* P18 -> _outputs[13] S8 */
 				PIN_OUTPUT,
 				computeFactory(13, [&](){
 					return Tristate(_state == 8);
 				}),
 				nullptr
 			},
-			{ /* P19 -> _outputs[14] */
+			{ /* P19 -> _outputs[14] S11 */
 				PIN_OUTPUT,
 				computeFactory(14, [&](){
 					return Tristate(_state == 11);
 				}),
 				nullptr
 			},
-			{ /* P20 -> _outputs[15] */
+			{ /* P20 -> _outputs[15] S10 */
 				PIN_OUTPUT,
 				computeFactory(15, [&](){
 					return Tristate(_state == 10);
