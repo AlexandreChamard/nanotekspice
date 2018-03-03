@@ -24,6 +24,7 @@ namespace nts {
 	private:
 		static unsigned int id;
 
+		std::array<Tristate, 4> _lastStates{{UNDEFINED, UNDEFINED, UNDEFINED, UNDEFINED}};
 		std::string _id;
 		std::array<Output, 4> _outputs;
 		std::array<Input, 8> _inputs;
@@ -52,11 +53,15 @@ namespace nts {
 			{ /* P1 -> _outputs[0] */
 				PIN_OUTPUT,
 				computeFactory(0, [&](){
-					if ((!COMPUTE_REF(_inputs[0])) &
+					if (((((!COMPUTE_REF(_inputs[0]))) &
 					(!COMPUTE_REF(_inputs[1])) &
-					(!COMPUTE_REF(_inputs[3]))) {
+					(!COMPUTE_REF(_inputs[3]))) == TRUE &&
+					COMPUTE_REF(_inputs[0]) != _lastStates[0]) ||
+					_lastStates[0] == UNDEFINED) {
+						_lastStates[0] = COMPUTE_REF(_inputs[0]);
 						return _outputs[0].state;
 					}
+				_lastStates[0] = COMPUTE_REF(_inputs[0]);
 				return (COMPUTE_REF(_inputs[3]) |
 				(COMPUTE_REF(_inputs[2]) &
 				(!COMPUTE_REF(_inputs[1]))));
@@ -66,11 +71,15 @@ namespace nts {
 			{ /* P2 -> _outputs[1] */
 				PIN_OUTPUT,
 				computeFactory(1, [&](){
-					if ((!COMPUTE_REF(_inputs[0])) &
+					if (((((!COMPUTE_REF(_inputs[0]))) &
 					(!COMPUTE_REF(_inputs[1])) &
-					(!COMPUTE_REF(_inputs[3]))) {
-						return _outputs[1].state;
+					(!COMPUTE_REF(_inputs[3]))) == TRUE &&
+					COMPUTE_REF(_inputs[0]) != _lastStates[1]) ||
+					_lastStates[1] == UNDEFINED) {
+						_lastStates[1] = COMPUTE_REF(_inputs[0]);
+						return _outputs[0].state;
 					}
+				_lastStates[1] = COMPUTE_REF(_inputs[0]);
 				return (COMPUTE_REF(_inputs[1]) |
 				((!COMPUTE_REF(_inputs[2])) &
 				(!COMPUTE_REF(_inputs[3]))));
@@ -125,11 +134,15 @@ namespace nts {
 			{ /* P12 -> _outputs[2] */
 				PIN_OUTPUT,
 				computeFactory(2, [&](){
-					if ((!COMPUTE_REF(_inputs[7])) &
+					if (((((!COMPUTE_REF(_inputs[7]))) &
 					(!COMPUTE_REF(_inputs[4])) &
-					(!COMPUTE_REF(_inputs[6]))) {
+					(!COMPUTE_REF(_inputs[6]))) == TRUE &&
+					COMPUTE_REF(_inputs[0]) != _lastStates[2]) ||
+					_lastStates[2] == UNDEFINED) {
+						_lastStates[2] = COMPUTE_REF(_inputs[7]);
 						return _outputs[2].state;
 					}
+				_lastStates[2] = COMPUTE_REF(_inputs[7]);
 				return (COMPUTE_REF(_inputs[6]) |
 				((!COMPUTE_REF(_inputs[4])) &
 				(!COMPUTE_REF(_inputs[5]))));
@@ -139,11 +152,15 @@ namespace nts {
 			{ /* P13 -> _outputs[3] */
 				PIN_OUTPUT,
 				computeFactory(3, [&](){
-					if ((!COMPUTE_REF(_inputs[7])) &
+					if (((((!COMPUTE_REF(_inputs[7]))) &
 					(!COMPUTE_REF(_inputs[4])) &
-					(!COMPUTE_REF(_inputs[6]))) {
-						return _outputs[3].state;
+					(!COMPUTE_REF(_inputs[6]))) == TRUE &&
+					COMPUTE_REF(_inputs[0]) != _lastStates[3]) ||
+					_lastStates[3] == UNDEFINED) {
+						_lastStates[3] = COMPUTE_REF(_inputs[7]);
+						return _outputs[2].state;
 					}
+				_lastStates[3] = COMPUTE_REF(_inputs[7]);
 				return (COMPUTE_REF(_inputs[4]) |
 				(COMPUTE_REF(_inputs[5]) &
 				(!COMPUTE_REF(_inputs[6]))));
