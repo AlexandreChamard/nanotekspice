@@ -45,7 +45,7 @@ namespace nts {
 					_cycle = cycle_g;
 					if ((COMPUTE_REF(_inputs[0]) != TRUE &&
 					_lastStates[1] != TRUE &&
-					COMPUTE_REF(_inputs[0]) == TRUE) ||
+					COMPUTE_REF(_inputs[1]) == TRUE) ||
 					(COMPUTE_REF(_inputs[1]) == TRUE &&
 					_lastStates[0] == TRUE &&
 					COMPUTE_REF(_inputs[0]) != TRUE))
