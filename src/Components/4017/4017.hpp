@@ -43,12 +43,12 @@ namespace nts {
 			return [&, p, comp](){
 				if (_cycle != cycle_g) {
 					_cycle = cycle_g;
-					if ((COMPUTE_REF(_inputs[0]) == FALSE &&
-					_lastStates[1] == FALSE &&
+					if ((COMPUTE_REF(_inputs[0]) != TRUE &&
+					_lastStates[1] != TRUE &&
 					COMPUTE_REF(_inputs[0]) == TRUE) ||
 					(COMPUTE_REF(_inputs[1]) == TRUE &&
 					_lastStates[0] == TRUE &&
-					COMPUTE_REF(_inputs[0]) == FALSE))
+					COMPUTE_REF(_inputs[0]) != TRUE))
 					// if ((COMPUTE_REF(_inputs[0]) != TRUE &&
 					// COMPUTE_REF(_inputs[1]) == TRUE) || _count == 0)
 						_count++;
