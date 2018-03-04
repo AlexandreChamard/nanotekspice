@@ -23,6 +23,7 @@ namespace nts {
 	private:
 		static unsigned int id;
 
+		std::array<Tristate, 2> _lastStates{{UNDEFINED, UNDEFINED}};
 		std::string _id;
 		std::size_t _count = 0;
 		std::size_t _cycle = 0;
@@ -42,14 +43,22 @@ namespace nts {
 			return [&, p, comp](){
 				if (_cycle != cycle_g) {
 					_cycle = cycle_g;
-					if ((COMPUTE_REF(_inputs[0]) != TRUE &&
-					COMPUTE_REF(_inputs[1]) == TRUE) || _count == 0)
+					if ((COMPUTE_REF(_inputs[0]) == FALSE &&
+					_lastStates[1] == FALSE &&
+					COMPUTE_REF(_inputs[0]) == TRUE) ||
+					(COMPUTE_REF(_inputs[1]) == TRUE &&
+					_lastStates[0] == TRUE &&
+					COMPUTE_REF(_inputs[0]) == FALSE))
+					// if ((COMPUTE_REF(_inputs[0]) != TRUE &&
+					// COMPUTE_REF(_inputs[1]) == TRUE) || _count == 0)
 						_count++;
 					if (COMPUTE_REF(_inputs[2]) == TRUE)
 						_count = 0;
 					if (_count == 11) {
 						_count = 1;
 					}
+					_lastStates[0] = COMPUTE_REF(_inputs[0]);
+					_lastStates[1] = COMPUTE_REF(_inputs[1]);
 				}
 				return comp();
 			};
