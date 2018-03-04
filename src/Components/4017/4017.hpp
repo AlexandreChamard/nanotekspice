@@ -49,8 +49,6 @@ namespace nts {
 					(COMPUTE_REF(_inputs[1]) == TRUE &&
 					_lastStates[0] == TRUE &&
 					COMPUTE_REF(_inputs[0]) != TRUE) || _count == 0)
-					// if ((COMPUTE_REF(_inputs[0]) != TRUE &&
-					// COMPUTE_REF(_inputs[1]) == TRUE) || _count == 0)
 						_count++;
 					if (COMPUTE_REF(_inputs[2]) == TRUE)
 						_count = 0;
